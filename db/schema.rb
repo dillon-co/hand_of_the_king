@@ -11,21 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526165225) do
+ActiveRecord::Schema.define(version: 20160526212145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "job_applications", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "title"
+    t.string   "company"
+    t.string   "loaction"
+    t.string   "pay_rate"
+    t.integer  "pay_type"
+    t.text     "description"
+    t.integer  "job_link_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
+
+  add_index "job_applications", ["job_link_id"], name: "index_job_applications_on_job_link_id", using: :btree
 
   create_table "job_links", force: :cascade do |t|
     t.string   "job_title"
+    t.string   "job_type"
+    t.string   "job_subtitles"
+    t.string   "job_location"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "job_links", ["user_id"], name: "index_job_links_on_user_id", using: :btree
@@ -47,6 +59,10 @@ ActiveRecord::Schema.define(version: 20160526165225) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "resume_file_name"
+    t.string   "resume_content_type"
+    t.integer  "resume_file_size"
+    t.datetime "resume_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

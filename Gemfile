@@ -29,6 +29,10 @@ gem 'redis-rails', '~> 4.0.0'
 
 gem 'annotate'
 
+gem "paperclip", "~> 5.0.0.beta1"
+
+gem 'bootstrap', '~> 4.0.0.alpha3'
+
 
 gem 'devise'
 
@@ -42,6 +46,7 @@ gem 'devise'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'better_errors'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end

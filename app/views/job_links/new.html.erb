@@ -1,0 +1,15 @@
+<%= form_for @job_link do |f| %>
+  <h1>What job are you looking for?</h1>
+  <h4>When we find a match, we'll apply for you!</h4>
+  <%= f.text_field :job_title %><br>
+  <h4>Job Subtitles</h4>
+  <p>Junior, Entry level etc. Seperate by commas</p>
+  <%= f.text_field :job_subtitles %><br />
+  <%= f.label "Where?" %><br />
+  <%= f.text_area :job_location %><br />
+  <% if user_signed_in?  %>
+    <%= f.submit "Apply", class: 'btn btn-primary' %>
+  <% else %>
+    <%= link_to "Sign in or create an account to get started", new_user_session_path %>  
+   <% end %>  
+<% end %>    

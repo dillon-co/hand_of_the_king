@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-  resources :job_applications
-  devise_for :users
 
-  root to: "job_applications#index" 
+  resources :job_links
+
+  get 'thank-you' => "job_links#info_page"
+
+  resources :job_applications
+  devise_for :users, controllers: { registrations: 'users/registrations'}
+
+  root to: "job_links#new" 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

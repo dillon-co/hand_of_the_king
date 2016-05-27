@@ -1,0 +1,2 @@
+module JobLinksHelper
+end

@@ -19,6 +19,10 @@
 #  last_sign_in_ip        :inet
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  resume_file_name       :string
+#  resume_content_type    :string
+#  resume_file_size       :integer
+#  resume_updated_at      :datetime
 #
 
 class User < ActiveRecord::Base
@@ -26,6 +30,16 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_attached_file :resume 
+
+  validates_attachment :resume,
+                       content_type: { content_type: ["image/jpeg", 
+                                                      "image/png", 
+                                                      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                                      'application/pdf',
+                                                      /\Aimage\/.*\Z/] }
+
 
   has_many :job_links
 end

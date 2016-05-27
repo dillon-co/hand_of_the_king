@@ -1,0 +1,9 @@
+<div class="container">
+<% if @job_links.class == String %>
+  <h2><%= @job_links %></h2>
+<% else %>  
+  <%= @job_links.each do |job| %>
+    <h2><%= job %></h2>
+  <% end %>
+<% end %>  
+</div>
