@@ -9,6 +9,6 @@ class SearchWorker
     form = agent.page.forms[0]
     form["q"] = "Developer"
     form["l"] = "Provo"
-    form.submit
+    form.submit.link["developers"]
   end  
 end  
