@@ -26,12 +26,10 @@ class JobLink < ActiveRecord::Base
     form["q"] = "Developer"
     form["l"] = "Provo"
     form.submit
-    data = agent.page.search(".result:contains('Easily apply')").css(".jobtitle").each do |l|
-      puts "\n\n\n\n\n#{'=='*40}\n\n\n\n\n\n #{l}\n\n\n\n\n\n"
-    end  
-    # data.search('div:contains("Easily apply")').each do |applicable_div|
-    #    applicable_div.each { |d| puts d}
-    #   # agent.click(open_uri)
-    # end  
+    data = agent.page.search(".result:contains('Easily apply')").each do |title|
+      title.css('.jobtitle').each do |anchor|
+        puts "\n\n\n\n\n#{'===='*40}\n\n\n\n\n\n #{agent.click(anchor)}\n\n\n\n\n\n"
+      end  
+    end   
   end  
 end

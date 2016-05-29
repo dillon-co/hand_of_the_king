@@ -2,6 +2,7 @@ class CreateJobApplications < ActiveRecord::Migration
   def change
     create_table :job_applications do |t|
 
+      t.string :indeed_link
       t.string :title
       t.string :company
       t.string :loaction
