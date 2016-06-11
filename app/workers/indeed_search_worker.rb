@@ -7,8 +7,8 @@ class SearchWorker
     agent = Mechanize.new
     agent.get('http://www.indeed.com/')
     form = agent.page.forms[0]
-    form["q"] = "Developer"
-    form["l"] = "Provo"
+    form["q"] = 'a'
+    form["l"] = "a"
     form.submit.link["developers"]
   end  
 end  

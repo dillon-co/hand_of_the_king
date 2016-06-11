@@ -27,6 +27,12 @@ gem "sidekiq-cron", "~> 0.4.0"
 gem 'sinatra', :require => nil
 gem 'redis-rails', '~> 4.0.0'
 
+gem 'poltergeist'
+
+# gem 'watir-webdriver'
+gem 'watir'
+gem 'watir-dom-wait'
+
 gem 'annotate'
 
 gem "paperclip", "~> 5.0.0.beta1"

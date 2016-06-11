@@ -5,7 +5,7 @@ class CreateJobApplications < ActiveRecord::Migration
       t.string :indeed_link
       t.string :title
       t.string :company
-      t.string :loaction
+      t.string :location
       t.string :pay_rate
 
       t.integer :pay_type

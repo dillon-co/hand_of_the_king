@@ -3,9 +3,10 @@
 # Table name: job_applications
 #
 #  id          :integer          not null, primary key
+#  indeed_link :string
 #  title       :string
 #  company     :string
-#  loaction    :string
+#  location    :string
 #  pay_rate    :string
 #  pay_type    :integer
 #  description :text

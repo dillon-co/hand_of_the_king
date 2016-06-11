@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20160526212145) do
     t.string   "indeed_link"
     t.string   "title"
     t.string   "company"
-    t.string   "loaction"
+    t.string   "location"
     t.string   "pay_rate"
     t.integer  "pay_type"
     t.text     "description"
