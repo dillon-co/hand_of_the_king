@@ -2,58 +2,83 @@
 #
 # Table name: job_applications
 #
-#  id          :integer          not null, primary key
-#  indeed_link :string
-#  title       :string
-#  company     :string
-#  location    :string
-#  pay_rate    :string
-#  pay_type    :integer
-#  description :text
-#  job_link_id :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id                :integer          not null, primary key
+#  user_name         :string
+#  user_email        :string
+#  user_phone_number :string
+#  user_resume_path  :string
+#  user_cover_letter :string
+#  indeed_link       :string
+#  title             :string
+#  company           :string
+#  location          :string
+#  pay_rate          :string
+#  pay_type          :integer
+#  description       :text
+#  job_link_id       :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
+
 require 'capybara/poltergeist'
 require 'watir-webdriver'
 require 'watir-webdriver/wait'
 
 class JobApplication < ActiveRecord::Base
   belongs_to :job_link
-  # after_save :apply_to_jobs
+  after_save :apply_to_job, unless: :applied_to 
 
-  def apply_to_jobs
-    user = job_link.user
+  def fill_out_modal_with_text_first(input_frame)
+    fill_out_text_form(input_frame)
+    if input_frame.button(id: 'apply').present?
+      input_frame.button(id: 'apply').click
+    else  
+      input_frame.a(class: 'form-page-next').click
+      click_checkboxes
+      input_frame.button(id: 'apply').click
+    end        
+  end 
+
+  def fill_out_modal_with_text_last(input_frame)
+    click_checkboxes(inpput_frame)
+    fill_out_text_form(input_frame)
+    input_frame.button(id: 'apply').click
+  end 
+  
+
+  def fill_out_text_form(input_frame)
+    input_frame.text_field(id: 'applicant.name').set user_name#"#{user.first_name} #{user.last_name}"
+    input_frame.text_field(id: 'applicant.email').set user_email#user.email
+    input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
+    input_frame.file_field.set '/Users/dilloncortez/documents/tech_resume_january_2016.pdf'#job_link.user.resume.path
+    input_frame.text_field(id: 'applicant.applicationMessage').set user_cover_letter
+  end  
+
+  def click_checkboxes(input_frame)
+    %w(0 1 2 3 4).each do |question_number|
+      if input_frame.div(id: "q_#{question_number}").exists?
+        input_frame.div(id: "q_#{question_number}").radio(value: "0").set
+      else 
+        break
+      end  
+    end
+  end  
+
+  def apply_to_job
     browser = Watir::Browser.new
     browser.goto indeed_link
     browser.span(class: 'indeed-apply-widget').click
-    sleep 3
-    input_frame = browser.iframe(id: /indeed-ia/).iframe
-    puts "\n\n\n\n===should go here =====>#{input_frame}<=========\n\n\n\n"
-    input_frame.text_field(id: 'applicant.name').set "Dillon Cortez"#"#{user.first_name} #{user.last_name}"
-    input_frame.text_field(id: 'applicant.email').set "dilloncortez@gmail.com"#user.email
-    input_frame.text_field(id: 'applicant.phoneNumber').set "(801) 824 - 2592"#user.phone_number if user.phone_number != nil
-    input_frame.file_field.set '/Users/dilloncortez/documents/tech_resume_january_2016.pdf'#job_link.user.resume.path
-    input_frame.text_field(id: 'applicant.applicationMessage').set "A robot that I made applied to this job for me. :)"#user.cover_letter if user.cover_letter != nil
-    # input_frame.a(class: 'form-page-next').click
-
-    # browser.iframe(src: "https://apply.indeed.com/indeedapply/resumeapply?jobUrl=http…oGX0zRknJzn93dTVB7u7lUBULJAcFaEExQaMuoMRYdeP-ZRN9c_wrjf8zHNQ").wait_until_present
-
-    # browser.input(id: 'applicant.name').set("Testing")
-    # session = Capybara::Session.new(:poltergeist)
-    # session.visit(indeed_link)
-    # session.find(".indeed-apply-button").click
-    # puts session.html
-    # modal = session.driver.browser.window_handles.last
-    # session.driver.switch_to_window(modal)
-
-    # puts session.find("input")
-
-    # name_input = session.find(:css, '.applicant')
-    # session.fill_in("name", :with => "Test Tester")  
-    # session.fill_in('#applicant.email', :with => 'test@demo.com')
-    # session.click_button('#apply')
-
+    sleep 2
+    if browser.iframe(id: /indeed-ia/).exists?
+      input_frame = browser.iframe(id: /indeed-ia/).iframe
+      if input_frame.text_field(id: 'applicant.name').visible? 
+        fill_out_modal_with_text_first(input_frame)     
+      else
+        fill_out_modal_with_text_last(input_frame)
+      end  
+      self.update(applied_to: true) 
+    end  
+    browser.close
   end  
 end
 

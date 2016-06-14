@@ -17,16 +17,22 @@ ActiveRecord::Schema.define(version: 20160526212145) do
   enable_extension "plpgsql"
 
   create_table "job_applications", force: :cascade do |t|
+    t.string   "user_name"
+    t.string   "user_email"
+    t.string   "user_phone_number"
+    t.string   "user_resume_path"
+    t.string   "user_cover_letter"
     t.string   "indeed_link"
     t.string   "title"
     t.string   "company"
     t.string   "location"
     t.string   "pay_rate"
+    t.boolean  "applied_to",        default: false
     t.integer  "pay_type"
     t.text     "description"
     t.integer  "job_link_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "job_applications", ["job_link_id"], name: "index_job_applications_on_job_link_id", using: :btree

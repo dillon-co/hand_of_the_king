@@ -30,6 +30,8 @@ gem 'redis-rails', '~> 4.0.0'
 gem 'poltergeist'
 
 # gem 'watir-webdriver'
+gem 'aws-sdk', '~> 2'
+
 gem 'watir'
 gem 'watir-dom-wait'
 
@@ -53,8 +55,11 @@ gem 'devise'
 
 group :development, :test do
   gem 'better_errors'
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+
+  gem 'pry-rails'
   gem 'byebug'
+  gem 'pry-byebug'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 end
 
 group :development do

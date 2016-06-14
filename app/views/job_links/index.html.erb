@@ -2,8 +2,9 @@
 <% if @job_links.class == String %>
   <h2><%= @job_links %></h2>
 <% else %>  
-  <%= @job_links.each do |job| %>
-    <h2><%= job %></h2>
+  <h1>Job's you've applied to</h1>
+  <% @job_links.each do |job| %>
+    <h2><%= job.job_title %></h2>
   <% end %>
 <% end %>  
 </div>
