@@ -19,14 +19,12 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
-
-require 'capybara/poltergeist'
 require 'watir-webdriver'
 require 'watir-webdriver/wait'
 
 class JobApplication < ActiveRecord::Base
   belongs_to :job_link
-  after_save :apply_to_job, unless: :applied_to 
+  after_save :apply_to_job#, unless: :applied_to 
 
   def fill_out_modal_with_text_first(input_frame)
     fill_out_text_form(input_frame)
@@ -40,14 +38,23 @@ class JobApplication < ActiveRecord::Base
   end 
 
   def fill_out_modal_with_text_last(input_frame)
-    click_checkboxes(inpput_frame)
+    click_checkboxes(input_frame)
     fill_out_text_form(input_frame)
     input_frame.button(id: 'apply').click
+  end
+
+  def fill_out_name(input_frame)
+    if input_frame.text_field(id: 'applicant.name').present?
+      input_frame.text_field(id: 'applicant.name').set user_name
+    else
+      input_frame.text_field(id: 'applicant.firstName').set user_name.split(' ').first
+      input_frame.text_field(id: 'applicant.lastName').set user_name.split(' ').last
+    end  
   end 
   
 
   def fill_out_text_form(input_frame)
-    input_frame.text_field(id: 'applicant.name').set user_name#"#{user.first_name} #{user.last_name}"
+    fill_out_name(input_frame)
     input_frame.text_field(id: 'applicant.email').set user_email#user.email
     input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
     input_frame.file_field.set '/Users/dilloncortez/documents/tech_resume_january_2016.pdf'#job_link.user.resume.path
@@ -55,23 +62,25 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def click_checkboxes(input_frame)
-    %w(0 1 2 3 4).each do |question_number|
-      if input_frame.div(id: "q_#{question_number}").exists?
-        input_frame.div(id: "q_#{question_number}").radio(value: "0").set
-      else 
-        break
-      end  
+    if input_frame.radio.present?
+      %w(0 1 2 3 4).each do |question_number|
+        if input_frame.div(id: "q_#{question_number}").exists?
+          input_frame.div(id: "q_#{question_number}").radio(value: "0").set
+        else 
+          break
+        end  
+      end
     end
   end  
 
   def apply_to_job
-    browser = Watir::Browser.new
+    browser = Watir::Browser.new 
     browser.goto indeed_link
     browser.span(class: 'indeed-apply-widget').click
-    sleep 2
+    sleep 3.5
     if browser.iframe(id: /indeed-ia/).exists?
       input_frame = browser.iframe(id: /indeed-ia/).iframe
-      if input_frame.text_field(id: 'applicant.name').visible? 
+      if input_frame.text_field.present? 
         fill_out_modal_with_text_first(input_frame)     
       else
         fill_out_modal_with_text_last(input_frame)
