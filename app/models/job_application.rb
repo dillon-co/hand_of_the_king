@@ -21,6 +21,7 @@
 #
 require 'watir-webdriver'
 require 'watir-webdriver/wait'
+require 'headless'
 
 class JobApplication < ActiveRecord::Base
   belongs_to :job_link
@@ -74,6 +75,8 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def apply_to_job
+    headless = Headless.new
+    headless.start
     browser = Watir::Browser.new 
     browser.goto indeed_link
     browser.span(class: 'indeed-apply-widget').click
@@ -87,7 +90,8 @@ class JobApplication < ActiveRecord::Base
       end  
       self.update(applied_to: true) 
     end  
-    browser.close
   end  
+  browser.close
+  headless.destroy
 end
 
