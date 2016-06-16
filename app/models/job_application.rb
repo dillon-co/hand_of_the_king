@@ -90,8 +90,8 @@ class JobApplication < ActiveRecord::Base
       end  
       self.update(applied_to: true) 
     end  
+    browser.close
+    headless.destroy
   end  
-  browser.close
-  headless.destroy
 end
 
