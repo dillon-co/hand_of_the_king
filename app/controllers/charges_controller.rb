@@ -9,7 +9,7 @@ def create
   token = params[:stripeToken]
 
   customer = Stripe::Customer.create(
-    card: token
+    card: token,
     email: current_user.email
   )
 
