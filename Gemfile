@@ -31,8 +31,6 @@ gem 'poltergeist'
 
 gem 'headless', '~> 2.2', '>= 2.2.3'
 
-gem 'stripe'
-
 # gem 'watir-webdriver'
 gem 'aws-sdk', '~> 2'
 

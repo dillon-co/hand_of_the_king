@@ -31,6 +31,7 @@ class JobLink < ActiveRecord::Base
     form["q"] = job_title
     form["l"] =  job_location
     form.submit
+    puts user_resume_path
     counter = 0
     agent.page.search(".result:contains('Easily apply')").each do |title|
       puts counter += 1

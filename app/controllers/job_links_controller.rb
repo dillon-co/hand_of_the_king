@@ -1,4 +1,6 @@
 class JobLinksController < ApplicationController
+  # skip_before_filter  :verify_authenticity_token
+
   def index
     user_signed_in? ? @job_links = current_user.job_links.all : @job_links = "You Haven't searched for any jobs yet!"
   end

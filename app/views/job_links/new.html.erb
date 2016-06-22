@@ -10,4 +10,14 @@
   <% else %>
     <%= link_to "Sign in or create an account to get started", new_user_session_path %>  
    <% end %>  
-<% end %>    
+<% end %>  
+
+<% if user_signed_in? %>
+  <li>
+  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
+  </li>
+<% else %>
+  <li>
+  <%= link_to('Login', new_user_session_path)  %>  
+  </li>
+<% end %>  
