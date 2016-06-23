@@ -39,23 +39,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-    params.require(:user).permit(:first_name, :last_name, :phone_number, :cover_letter, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :cover_letter, :email, :password, :password_confirmation, :resume)
   end  
 
   def account_update_params
-    params.require(:user).permit(:first_name, :last_name, :phone_number, :cover_letter, :email, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :phone_number, :cover_letter, :email, :password, :password_confirmation, :resume)
   end  
 
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone_number, :cover_letter])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone_number, :cover_letter, :resume])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :phone_number, :cover_letter])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :phone_number, :cover_letter, :resume])
   end
 
   # The path used after sign up.

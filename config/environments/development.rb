@@ -39,9 +39,11 @@ Rails.application.configure do
   config.paperclip_defaults = {
   storage: :s3,
   s3_credentials: {
-    bucket: ENV['AWS_S3_BUCKET'],
+    bucket: 'job-bot-bucket',
     access_key_id: ENV['AMAZON_ACCESS_KEY_ID'],
     secret_access_key: ENV['AMAZON_SECRET_ACCESS_KEY'],
+    s3_region: 'us-east-1',
+    # endpoing: 'job-bot-bucket.s3.us-west-2.amazonaws.com'
   }
 }
 
