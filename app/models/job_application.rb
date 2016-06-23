@@ -58,7 +58,7 @@ class JobApplication < ActiveRecord::Base
     fill_out_name(input_frame)
     input_frame.text_field(id: 'applicant.email').set user_email#user.email
     input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
-    input_frame.file_field.set '/Users/dilloncortez/documents/tech_resume_january_2016.pdf'#job_link.user.resume.path
+    input_frame.file_field.set job_link.user.resume.path
     input_frame.text_field(id: 'applicant.applicationMessage').set user_cover_letter
   end  
 
@@ -92,6 +92,11 @@ class JobApplication < ActiveRecord::Base
     end  
     browser.close
     headless.destroy
-  end  
+  end
+
+  # def capybara_apply_to_job
+    
+  # end  
+  
 end
 
