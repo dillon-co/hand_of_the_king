@@ -19,6 +19,9 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
+
+require 'capybara/poltergeist'
+
 require 'watir-webdriver'
 require 'watir-webdriver/wait'
 require 'headless'
@@ -75,9 +78,7 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def apply_to_job
-    headless = Headless.new
-    headless.start
-    browser = Watir::Browser.new 
+    browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
     browser.goto indeed_link
     browser.span(class: 'indeed-apply-widget').click
     sleep 3.5
@@ -91,12 +92,7 @@ class JobApplication < ActiveRecord::Base
       self.update(applied_to: true) 
     end  
     browser.close
-    headless.destroy
   end
 
-  # def capybara_apply_to_job
-    
-  # end  
-  
 end
 
