@@ -43,7 +43,7 @@ gem "paperclip", "~> 5.0.0.beta1"
 
 gem 'bootstrap', '~> 4.0.0.alpha3'
 
-gem 'rails_12factor'
+gem 'rails_12factor', group: :production
 
 gem 'devise'
 
