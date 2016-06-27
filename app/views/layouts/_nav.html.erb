@@ -8,16 +8,16 @@
       <%= link_to "Employers", job_applications_path, class: 'nav-link' %>
     </li>  
       <% if user_signed_in? %>
-    <li class='nav-item active pull-xs-right'>
-        <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'nav-link' %>  
-    </li>
-    <li class='nav-item active pull-xs-right'>    
-        <%= link_to 'My Jobs', job_links_path, class: 'nav-link' %>
-    </li>  
+        <li class='nav-item active pull-xs-right'>
+            <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'nav-link' %>  
+        </li>
+        <li class='nav-item active pull-xs-right'>    
+            <%= link_to 'My Jobs', job_links_path, class: 'nav-link' %>
+        </li>  
       <% else %>
-       <li class='nav-item active pull-xs-right'>
-        <%= link_to 'Login', new_user_session_path, class: 'nav-link'  %>  
-      </li>      
+           <li class='nav-item active pull-xs-right'>
+            <%= link_to 'Login', new_user_session_path, class: 'nav-link'  %>  
+          </li>      
       <% end %>  
     </li>
   </ul>
