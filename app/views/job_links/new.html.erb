@@ -1,23 +1,26 @@
-<%= form_for @job_link do |f| %>
-  <h1>Job Title</h1>(be specific)
-  <h6>When we find a match, we'll apply for you!</h6>
-  <%= f.text_field :job_title %><br><br />
-   <h4>Where?</h4> 
-   <p>You can add multiple locations, seperate by commas</p>
-  <%= f.text_field :job_location %>(Optional)<br />
-  <% if user_signed_in?  %>
-    <%= f.submit "Apply", class: 'btn btn-primary' %>
-  <% else %>
-    <%= link_to "Sign in or create an account to get started", new_user_session_path %>  
-   <% end %>  
-<% end %>  
-
-<% if user_signed_in? %>
-  <li>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
-  </li>
-<% else %>
-  <li>
-  <%= link_to('Login', new_user_session_path)  %>  
-  </li>
-<% end %>  
+<div class-"container-fluid jumbotron super-jumbo">
+  <div class='main-title col-sm-offset-2'>
+    <h1>Velvidi</h1>
+  </div>
+  <div class='container-fluid main-jumbo'>
+    <%= form_for @job_link do |f| %>
+      <div class='col-md-7 col-md-offset-2'>
+        <span class='col-xs-5 job-title'>
+          <h4>Job Title</h4>
+          <%= f.text_field :job_title %><br><br />
+        </span>
+        <span class='col-xs-5'>
+          <h4>Where</h4>
+          <%= f.text_field :job_location %><br /><br /> 
+        </span>
+      <div class='col-xs-2 button-element' align='center' >
+        <% if user_signed_in?  %>
+          <%= f.submit "Apply", class: 'btn btn-primary' %>
+        <% else %>
+          <%= link_to "Apply", new_user_session_path, class: 'btn btn-primary' %>  
+         <% end %>
+        </div>   
+      </div>  
+    <% end %>  
+  </div>
+</div>

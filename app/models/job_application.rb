@@ -78,9 +78,11 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def apply_to_job
+    puts "\n\n\n\n\n#{'8'*20}#{indeed_link}"
     browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
-    browser.goto indeed_link
-    browser.span(class: 'indeed-apply-widget').click
+    browser.goto indeed_link.first
+    browser.span(class: /indeed-apply-/).click
+    puts "clicked modal button"
     sleep 3.5
     if browser.iframe(id: /indeed-ia/).exists?
       input_frame = browser.iframe(id: /indeed-ia/).iframe

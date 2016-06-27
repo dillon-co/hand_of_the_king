@@ -15,6 +15,7 @@
 
 h1,h2,h3,h4,h5,h6,p,label,input,a,em{
   font-family: 'Montserrat', sans-serif;
+  color: rgba(0,0,0,0.87);
   // font-family: 'Amaranth', sans-serif;
 }
 
@@ -23,6 +24,46 @@ h1,h2,h3,h4,h5,h6,p,label,input,a,em{
 }
 
 .cover-letter{
-  min-width: 400px;
+  min-width: 500px;
   min-height: 247px;
+}
+
+.main-title{
+  margin-top: 100px;
+  margin-bottom: 63px;
+  h1{
+    font-size: 75px;
+  margin-left: 15px;
+  font-weight: bold;
+    color: rgb(112,51,130);
+  }
+}
+
+.job-link-index{
+  margin-top: 30px;
+}
+
+.main-jumbo{
+    background-color: rgba(0,0,0,0);
+    font-color: #91B259;
+  .job-title{
+    // float: right;
+    margin-right: auto;
+    #job_link_job_title{
+      min-width: 245px;
+    }
+  }
+  #job_link_job_location{
+    min-width: 245px;
+    float:left
+  }
+  .btn{
+    margin-top: 30px;
+    // background-color: #098759;
+    // background-color: #CC950E;
+    // background-color: #136E4C;
+    background-color: #B5A835;
+    // background-color: #0A3A29;
+    border: none;
+  }
 }

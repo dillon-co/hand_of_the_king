@@ -9,6 +9,11 @@ class JobLinksController < ApplicationController
     @job_link = JobLink.new
   end
 
+  def show
+    @job_link = JobLink.find(params[:id])
+    @job_applications = @job_link.job_applications.all
+  end  
+
   def create
     job_link = current_user.job_links.new(job_link_params)
     if job_link.save

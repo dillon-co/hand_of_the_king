@@ -37,9 +37,9 @@ class JobLink < ActiveRecord::Base
       puts counter += 1
       begin
         # puts title.at('h2').css('a')
-        agent.click title.css('a').first
+        agent.click title.css('a.jobtitle').first
         title, company, location = title.css('h2').text, title.at(".company").text, title.search('.location').text
-        next if job_applications.where(title: title, company: company).any? || !!(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) || !!!(agent.page.uri.to_s.match(/indeed.com/))
+        next if job_applications.where(title: title, company: company).any? || !!(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) || !(agent.page.uri.to_s.match(/indeed.com/))
         puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
         job_applications.find_or_create_by(indeed_link: agent.page.uri.to_s,
                                           title: title,

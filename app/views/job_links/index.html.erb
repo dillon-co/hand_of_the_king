@@ -1,14 +1,13 @@
-<h1>Velvidi</h1>
-
-<div class="container">
+<div class="container job-link-index">
 <% if @job_links.class == String %>
   <h2><%= @job_links %></h2>
 <% else %>  
-  <h2>Job's you've applied to</h2><br>
+  <h1>My Jobs</h1><br>
   <% @job_links.each do |job| %>
     <div class="container col-md-4 ">
       <div class='jumbotron'>  
-        <h3><%= job.job_title %></h3>
+        <h3><%= link_to job.job_title, job_link_path(job) %></h3>
+        <h5><%= job.job_location %></h5>
       </div>
     </div>  
   <% end %>
