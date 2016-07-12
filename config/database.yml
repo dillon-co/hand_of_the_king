@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: hand_of_the_king_production
-  username: hand_of_the_king
+  username: dillon
   password: <%= ENV['HAND_OF_THE_KING_DATABASE_PASSWORD'] %>
