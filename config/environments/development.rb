@@ -43,7 +43,6 @@ Rails.application.configure do
     access_key_id: ENV['AMAZON_ACCESS_KEY_ID'],
     secret_access_key: ENV['AMAZON_SECRET_ACCESS_KEY'],
     s3_region: 'us-east-1',
-    # endpoing: 'job-bot-bucket.s3.us-west-2.amazonaws.com'
   }
 }
 
