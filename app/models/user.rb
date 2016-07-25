@@ -32,7 +32,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_attached_file :resume 
-
   validates_attachment :resume,
                        :content_type => {:content_type => %w(
                         image/jpeg
@@ -44,4 +43,7 @@ class User < ActiveRecord::Base
 
 
   has_many :job_links
+
+
+
 end

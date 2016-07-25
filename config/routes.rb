@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  get 'pages/about'
+
   mount Sidekiq::Web => '/sidekiq'
 
   resources :job_links
@@ -11,6 +13,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations'}
 
   root to: "job_links#new" 
+
+  get 'about' => 'pages#about', as: :about
 
   resources :charges
   # The priority is based upon order of creation: first created -> highest priority.
