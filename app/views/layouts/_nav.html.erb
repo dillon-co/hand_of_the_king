@@ -2,11 +2,12 @@
   <%= link_to "Velvidi", root_path, class: 'navbar-brand pull-xs-center' %>
   <ul class="nav navbar-nav">
     <li class="nav-item pull-right">
-      <a class="nav-link" href="#">About</a>
+      <%= link_to "About", about_path, class: 'nav-link' %>
+
     </li>
-    <li class='nav-item'>
+<!--     <li class='nav-item'>
       <%= link_to "Employers", job_applications_path, class: 'nav-link' %>
-    </li>  
+    </li>  --> 
       <% if user_signed_in? %>
         <li class='nav-item active pull-xs-right'>
             <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'nav-link' %>  
