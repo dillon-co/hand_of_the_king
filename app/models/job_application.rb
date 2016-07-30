@@ -21,7 +21,7 @@
 #
 
 require 'capybara/poltergeist'
-
+require 'open-uri'
 require 'watir-webdriver'
 require 'watir-webdriver/wait'
 require 'headless'
@@ -88,7 +88,7 @@ class JobApplication < ActiveRecord::Base
   def apply_to_job
     puts "\n\n\n\n\n#{'8'*20}#{indeed_link}\n\n\n\n"
 
-    browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
+    browser = Watir::Browser.new #:phantomjs, :args => ['--ssl-protocol=tlsv1']
     browser.goto indeed_link
     browser.span(id: /indeed-ia/).click
     puts "clicked modal button"
