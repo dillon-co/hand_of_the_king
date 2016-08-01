@@ -28,7 +28,7 @@ class JobLink < ActiveRecord::Base
     agent = Mechanize.new 
     agent.get('http://www.indeed.com/')
     fill_out_search_form(agent)
-    search_and_create_job_application(agent, agent.page.url)
+    search_and_create_job_application(agent)
   end
 
   def fill_out_search_form(agent)
