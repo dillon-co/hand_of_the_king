@@ -21,6 +21,7 @@ class JobLink < ActiveRecord::Base
   belongs_to :user
   has_many :job_applications
   after_save :call_search_worker
+  validates_presence_of :job_title
 
   ## Solution: save each paginated page in an array and run an each loop on that
 
@@ -40,19 +41,12 @@ class JobLink < ActiveRecord::Base
   end 
 
   def loop_through_pages_and_search(agent)
-    all_pages = agent.page.search('.pagination').css('a')
-    all_pages.each_with_index do |link, page_num|
-      begin
-        puts "#{"\n"*5}#{page_num}#{"\n"*5}"
-        search_and_create_job_application(agent)
-        agent.click link
-      rescue Exception => e
-        case e.message
-          when /404/ then puts '404!'
-          when /500/ then puts '500!'
-          else puts 'IDK!'
-        end
-      end  
+    all_pages = []
+    pagenation_links = agent.page.search('.pagination').css('a')
+    pagenation_links.each_with_index do |link, page_num|
+      puts "#{"\n"*5}#{page_num}#{"\n"*5}"
+      agent.click link
+       all_pages<<agent.page
     end  
   end 
 
