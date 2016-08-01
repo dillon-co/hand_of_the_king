@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+
+
   has_attached_file :resume 
   validates_attachment :resume,
                        :content_type => {:content_type => %w(
@@ -40,6 +42,10 @@ class User < ActiveRecord::Base
                         application/pdf 
                         application/msword 
                         application/vnd.openxmlformats-officedocument.wordprocessingml.document)}
+  
+  validates_attachment_presence :resume
+  validates :first_name, presence: true, on: :create       
+  validates :last_name, presence: true, on: :create
 
 
   has_many :job_links

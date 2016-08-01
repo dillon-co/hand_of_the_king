@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'thank-you' => "job_links#info_page"
 
   resources :job_applications
-  devise_for :users, controllers: { registrations: 'users/registrations'}
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   root to: "job_links#new" 
 

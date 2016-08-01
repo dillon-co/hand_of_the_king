@@ -21,6 +21,7 @@ class JobLink < ActiveRecord::Base
   belongs_to :user
   has_many :job_applications
   after_save :call_search_worker
+
   
 
   def run_search

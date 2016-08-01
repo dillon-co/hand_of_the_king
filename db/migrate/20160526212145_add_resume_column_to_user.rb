@@ -1,6 +1,6 @@
 class AddResumeColumnToUser < ActiveRecord::Migration
   def up
-    add_attachment :users, :resume
+    add_attachment :users, :resume, null: false
   end
 
   def down

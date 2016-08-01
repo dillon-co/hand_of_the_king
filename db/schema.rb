@@ -66,10 +66,10 @@ ActiveRecord::Schema.define(version: 20160526212145) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "resume_file_name"
-    t.string   "resume_content_type"
-    t.integer  "resume_file_size"
-    t.datetime "resume_updated_at"
+    t.string   "resume_file_name",                    null: false
+    t.string   "resume_content_type",                 null: false
+    t.integer  "resume_file_size",                    null: false
+    t.datetime "resume_updated_at",                   null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
