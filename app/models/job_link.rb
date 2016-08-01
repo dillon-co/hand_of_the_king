@@ -22,12 +22,13 @@ class JobLink < ActiveRecord::Base
   has_many :job_applications
   after_save :call_search_worker
 
-  
+  ## Solution: save each paginated page in an array and run an each loop on that
 
   def run_search
     agent = Mechanize.new 
     agent.get('http://www.indeed.com/')
     fill_out_search_form(agent)
+    # loop_through_pages_and_search(agent)
     search_and_create_job_application(agent)
   end
 
@@ -36,30 +37,38 @@ class JobLink < ActiveRecord::Base
     form["q"] = job_title
     form["l"] =  job_location
     form.submit
-  end  
+  end 
+
+  def loop_through_pages_and_search(agent)
+    all_pages = agent.page.search('.pagination').css('a')
+    all_pages.each_with_index do |link, page_num|
+      begin
+        puts "#{"\n"*5}#{page_num}#{"\n"*5}"
+        search_and_create_job_application(agent)
+        agent.click link
+      rescue Exception => e
+        case e.message
+          when /404/ then puts '404!'
+          when /500/ then puts '500!'
+          else puts 'IDK!'
+        end
+      end  
+    end  
+  end 
 
   def search_and_create_job_application(agent)
     path_to_resume = resume_key
-    # counter = 1 
-    # full_count = agent.page.search('.pagination').css('a').count || 1
-    # byebug
-    # until counter > full_count
-      agent.page.search(".result:contains('Easily apply')").each do |title|
-        job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
-        next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
+    agent.page.search(".result:contains('Easily apply')").each do |title|
+      job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
+      next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
 
-        begin
-          click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
-        rescue Exception => e
-          puts "#{e}"
-          next
-        end
-
+      begin
+        click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
+      rescue Exception => e
+        puts "#{e}"
+        next
       end
-      # counter += 1
-      # byebug
-      # agent.click agent.page.search('.pagination').css('a')[1] unless counter > full_count && !(agent.page.search('.pagination').css('a'))
-          
+    end 
   end  
 
 
