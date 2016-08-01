@@ -28,7 +28,7 @@ class JobLink < ActiveRecord::Base
     agent = Mechanize.new 
     agent.get('http://www.indeed.com/')
     fill_out_search_form(agent)
-    search_and_create_job_application(agent)
+    search_and_create_job_application(agent, agent.page.url)
   end
 
   def fill_out_search_form(agent)
@@ -40,17 +40,26 @@ class JobLink < ActiveRecord::Base
 
   def search_and_create_job_application(agent)
     path_to_resume = resume_key
-    agent.page.search(".result:contains('Easily apply')").each do |title|
-      job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
-      next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
+    # counter = 1 
+    # full_count = agent.page.search('.pagination').css('a').count || 1
+    # byebug
+    until counter > full_count
+      agent.page.search(".result:contains('Easily apply')").each do |title|
+        job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
+        next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
 
-      begin
-        click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
-      rescue Exception => e
-        puts "#{e}"
-        next
-      end      
-    end     
+        begin
+          click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
+        rescue Exception => e
+          puts "#{e}"
+          next
+        end
+
+      end
+      counter += 1
+      # byebug
+      # agent.click agent.page.search('.pagination').css('a')[1] unless counter > full_count && !(agent.page.search('.pagination').css('a'))
+    end       
   end  
 
 

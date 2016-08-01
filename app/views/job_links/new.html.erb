@@ -5,15 +5,15 @@
   <div class='container-fluid main-jumbo'>
     <%= form_for @job_link do |f| %>
       <div class='col-md-7 col-md-offset-2'>
-        <span class='col-xs-5 job-title'>
+        <span class='col-lg-5 job-title'>
           <h4>Job Title</h4>
           <%= f.text_field :job_title %><br><br />
         </span>
-        <span class='col-xs-5'>
+        <span class='col-lg-5'>
           <h4>Where</h4>
           <%= f.text_field :job_location %><br /><br /> 
         </span>
-      <div class='col-xs-2 button-element' align='center' >
+      <div class='col-lg-2 button-element' align='center' >
         <% if user_signed_in?  %>
           <%= f.submit "Apply", class: 'btn btn-primary' %>
         <% else %>
