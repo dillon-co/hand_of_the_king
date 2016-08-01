@@ -33,13 +33,13 @@ class JobApplication < ActiveRecord::Base
   def fill_out_modal_with_text_first(input_frame)
     fill_out_text_form(input_frame)
     if input_frame.button(id: 'apply').present?
-      puts "applying"
       input_frame.button(id: 'apply').click
+      puts "applied"
     else  
       input_frame.a(class: 'form-page-next').click
       click_checkboxes(input_frame)
-      puts "applying"
       input_frame.button(id: 'apply').click
+      puts "applied"
     end        
   end 
 
