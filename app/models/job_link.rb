@@ -59,7 +59,7 @@ class JobLink < ActiveRecord::Base
       # counter += 1
       # byebug
       # agent.click agent.page.search('.pagination').css('a')[1] unless counter > full_count && !(agent.page.search('.pagination').css('a'))
-    end       
+          
   end  
 
 
