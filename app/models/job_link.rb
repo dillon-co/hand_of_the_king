@@ -43,7 +43,7 @@ class JobLink < ActiveRecord::Base
     # counter = 1 
     # full_count = agent.page.search('.pagination').css('a').count || 1
     # byebug
-    until counter > full_count
+    # until counter > full_count
       agent.page.search(".result:contains('Easily apply')").each do |title|
         job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
         next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
@@ -56,7 +56,7 @@ class JobLink < ActiveRecord::Base
         end
 
       end
-      counter += 1
+      # counter += 1
       # byebug
       # agent.click agent.page.search('.pagination').css('a')[1] unless counter > full_count && !(agent.page.search('.pagination').css('a'))
     end       
