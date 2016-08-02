@@ -67,7 +67,7 @@ class JobApplication < ActiveRecord::Base
     puts "filling out phone number"
     input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
     puts "uploading resume"
-    input_frame.file_field.set user_resume#'/Users/dilloncortez/Documents/Tech_resume_january_2016.pdf'
+    input_frame.file_field.set user_resume
     puts "writing cover letter"
     input_frame.text_field(id: 'applicant.applicationMessage').set user_cover_letter
   end  
@@ -86,7 +86,7 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def apply_to_job
-    
+
     puts "\n\n\n\n\n#{'8'*20}#{indeed_link}\n\n\n\n"
 
     browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
