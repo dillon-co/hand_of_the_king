@@ -52,17 +52,28 @@ class JobLink < ActiveRecord::Base
 
   def search_and_create_job_application(agent)
     path_to_resume = resume_key
-    agent.page.search(".result:contains('Easily apply')").each do |title|
-      job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
-      next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
+    # byebug
+    @counter = 0
+    search_page = agent.page
+    until search_page.at_css('.np') == nil || @counter == 6
+      search_page = agent.page
+      puts search_page.at_css(".np:contains('Next »')").parent.parent
+      puts "\n\npage #{@counter+=1}\n\n"
+        puts agent.page.uri.to_s
+      agent.page.search(".result:contains('Easily apply')").each do |title|
+        job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
+        next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
 
-      begin
-        click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
-      rescue Exception => e
-        puts "#{e}"
-        next
-      end
-    end 
+        begin
+          click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
+        rescue Exception => e
+          puts "#{e}"
+          next
+        end
+      end 
+      agent.click search_page.at(".np:contains('Next »')").parent.parent
+      puts "===\n\n#{agent.page.uri}"
+    end  
   end  
 
 
@@ -71,14 +82,14 @@ class JobLink < ActiveRecord::Base
     if !(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) && !!(agent.page.uri.to_s.match(/indeed.com/))
       puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
       job_applications.find_or_create_by(indeed_link: agent.page.uri.to_s,
-                                        title: job_attributes[0],
-                                        company: job_attributes[1], 
-                                        location: job_attributes[2], 
-                                        user_name: user_attribute_array[0],
-                                        user_email: user_attribute_array[1],
-                                        user_phone_number: user_attribute_array[2],
-                                        user_resume_path: path_to_resume,
-                                        user_cover_letter: user_attribute_array[3]) 
+                                         title: job_attributes[0],
+                                         company: job_attributes[1], 
+                                         location: job_attributes[2], 
+                                         user_name: user_attribute_array[0],
+                                         user_email: user_attribute_array[1],
+                                         user_phone_number: user_attribute_array[2],
+                                         user_resume_path: path_to_resume,
+                                         user_cover_letter: user_attribute_array[3]) 
     end
   end  
 
