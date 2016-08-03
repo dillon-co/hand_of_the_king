@@ -40,39 +40,31 @@ class JobLink < ActiveRecord::Base
     form.submit
   end 
 
-  def loop_through_pages_and_search(agent)
-    all_pages = []
-    pagenation_links = agent.page.search('.pagination').css('a')
-    pagenation_links.each_with_index do |link, page_num|
-      puts "#{"\n"*5}#{page_num}#{"\n"*5}"
-      agent.click link
-       all_pages<<agent.page
-    end  
-  end 
 
   def search_and_create_job_application(agent)
     path_to_resume = resume_key
     # byebug
     @counter = 0
     search_page = agent.page
-    until search_page.at_css('.np') == nil || @counter == 6
+    until !(search_page.at_css('.np')) || @counter == 6
       search_page = agent.page
-      puts search_page.at_css(".np:contains('Next »')").parent.parent
-      puts "\n\npage #{@counter+=1}\n\n"
+      break if !(search_page.at_css(".np:contains('Next »')"))
+        puts search_page.at_css(".np:contains('Next »')").parent.parent
+        puts "\n\npage #{@counter+=1}\n\n"
         puts agent.page.uri.to_s
-      agent.page.search(".result:contains('Easily apply')").each do |title|
-        job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
-        next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
+        agent.page.search(".result:contains('Easily apply')").each do |title|
+          job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
+          next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
 
-        begin
-          click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
-        rescue Exception => e
-          puts "#{e}"
-          next
-        end
-      end 
-      agent.click search_page.at(".np:contains('Next »')").parent.parent
-      puts "===\n\n#{agent.page.uri}"
+          begin
+            click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
+          rescue Exception => e
+            puts "#{e}"
+            next
+          end
+        end 
+        agent.click search_page.at(".np:contains('Next »')").parent.parent
+        puts "===\n\n#{agent.page.uri}"
     end  
   end  
 
