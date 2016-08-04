@@ -46,7 +46,7 @@ class JobLink < ActiveRecord::Base
     # byebug
     @counter = 0
     search_page = agent.page
-    until !(search_page.at_css('.np')) || @counter == 8
+    until !(search_page.at_css(".np:contains('Next »')")) || @counter == 11
       search_page = agent.page
       break if !(search_page.at_css(".np:contains('Next »')"))
         puts search_page.at_css(".np:contains('Next »')").parent.parent
