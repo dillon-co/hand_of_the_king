@@ -70,19 +70,23 @@ class JobLink < ActiveRecord::Base
 
 
   def click_easily_applicable_link(agent, title, job_attributes, path_to_resume)
-    agent.click title.css('a').first  
-    if !(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) && !!(agent.page.uri.to_s.match(/indeed.com/))
-      puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
-      job_applications.find_or_create_by(indeed_link: agent.page.uri.to_s,
-                                         title: job_attributes[0],
-                                         company: job_attributes[1], 
-                                         location: job_attributes[2], 
-                                         user_name: user_attribute_array[0],
-                                         user_email: user_attribute_array[1],
-                                         user_phone_number: user_attribute_array[2],
-                                         user_resume_path: path_to_resume,
-                                         user_cover_letter: user_attribute_array[3]) 
-    end
+    begin
+      agent.click title.css('a').first  
+      if !(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) && !!(agent.page.uri.to_s.match(/indeed.com/))
+        puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
+        job_applications.find_or_create_by(indeed_link: agent.page.uri.to_s,
+                                           title: job_attributes[0],
+                                           company: job_attributes[1], 
+                                           location: job_attributes[2], 
+                                           user_name: user_attribute_array[0],
+                                           user_email: user_attribute_array[1],
+                                           user_phone_number: user_attribute_array[2],
+                                           user_resume_path: path_to_resume,
+                                           user_cover_letter: user_attribute_array[3]) 
+      end
+    rescue Exception => e
+      puts e
+    end  
   end  
 
   def user_attribute_array
