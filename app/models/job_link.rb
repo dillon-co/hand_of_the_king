@@ -20,7 +20,7 @@ class JobLink < ActiveRecord::Base
 
   belongs_to :user
   has_many :job_applications
-  after_save :call_search_worker
+  after_save :run_search #:call_search_worker
   validates_presence_of :job_title
 
   ## Solution: save each paginated page in an array and run an each loop on that

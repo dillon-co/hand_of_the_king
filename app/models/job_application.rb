@@ -28,7 +28,7 @@ require 'headless'
 
 class JobApplication < ActiveRecord::Base
   belongs_to :job_link
-  after_save :apply_to_job, unless: :applied_to 
+  # after_save :apply_to_job, unless: :applied_to 
 
   def fill_out_modal_with_text_first(input_frame)
     fill_out_text_form(input_frame)

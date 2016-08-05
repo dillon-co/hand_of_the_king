@@ -1,6 +1,9 @@
-<% @job_applications.each  do |job| %>
-  <div class="jumbotron col-md-6">
-    <h2><%= job.title %></h2>
-    <h6><%= job.company %>; <%= job.location %></h6>
-  </div>
-<% end %>
+<h1>Jobs We Found</h1>
+<div class="jumbotron">
+  <% @job_applications.each  do |job| %>
+    <div>
+      <h2><%= job.title %></h2>
+      <h6><%= job.company %>; <%= job.location %></h6>
+    </div>
+  <% end %>
+</div>
