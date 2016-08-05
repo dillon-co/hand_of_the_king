@@ -89,7 +89,7 @@ class JobLink < ActiveRecord::Base
                                            user_resume_path: path_to_resume,
                                            user_cover_letter: user_attribute_array[3]) 
       end
-    rescue Exception => e
+    rescue => e
       puts e 
       puts "no page here"     
       return
