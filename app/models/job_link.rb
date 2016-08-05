@@ -68,7 +68,8 @@ class JobLink < ActiveRecord::Base
               next
             end
           end 
-          agent.get "#{search_page.uri}&start=#{@counter}0"
+          next_page = agent.page.uri.to_s.gsub("&start=#{@counter-1}0",  "&start=#{@counter}0")
+          agent.get next_page
           puts "===\n\n#{agent.page.uri}"
       rescue Exception => e
          puts e
