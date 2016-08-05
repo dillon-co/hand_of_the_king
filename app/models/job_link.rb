@@ -30,7 +30,7 @@ class JobLink < ActiveRecord::Base
     agent.get('http://www.indeed.com/')
     fill_out_search_form(agent)
     # loop_through_pages_and_search(agent)
-    puts "place 3"
+
     search_and_create_job_application(agent)
   end
 
@@ -74,7 +74,8 @@ class JobLink < ActiveRecord::Base
 
   def click_easily_applicable_link(agent, title, job_attributes, path_to_resume)
       puts "place 2"
-      agent.click title.css('a').first  
+      agent.click title.css('a').first
+      puts "Place 3"  
       if !(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) && !!(agent.page.uri.to_s.match(/indeed.com/))
         puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
         job_applications.find_or_create_by(indeed_link: agent.page.uri.to_s,
