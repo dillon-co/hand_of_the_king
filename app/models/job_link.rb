@@ -64,16 +64,16 @@ class JobLink < ActiveRecord::Base
               click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
               
             rescue => e
-              puts "#{e}"
+              puts "\n\n#{e}\n\n"
               next
             end
           end 
-          indeed_base = agent.page.uri.to_s.split("&start").first
+          indeed_base = search_page.uri.to_s.split("&start").first
           next_page = "#{indeed_base}&start=#{@counter}0"
           agent.get next_page
           puts "===\n\n#{agent.page.uri}"
       rescue Exception => e
-         puts e
+         puts "\n\n#{e}\n\n"
          next 
       end  
     end  
