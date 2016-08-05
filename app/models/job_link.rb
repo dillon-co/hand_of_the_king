@@ -73,7 +73,8 @@ class JobLink < ActiveRecord::Base
 
 
   def click_easily_applicable_link(agent, title, job_attributes, path_to_resume)
-      puts "place 2"
+    puts "place 2"
+    begin
       agent.click title.css('a').first
       puts "Place 3"  
       if !(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) && !!(agent.page.uri.to_s.match(/indeed.com/))
@@ -88,7 +89,11 @@ class JobLink < ActiveRecord::Base
                                            user_resume_path: path_to_resume,
                                            user_cover_letter: user_attribute_array[3]) 
       end
-
+    rescue Exception => e
+      puts e 
+      puts "no page here"     
+      next
+    end  
   end  
 
   def user_attribute_array
