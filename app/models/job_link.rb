@@ -46,6 +46,7 @@ class JobLink < ActiveRecord::Base
     path_to_resume = resume_key
     # byebug
     @counter = 0
+
     search_page = agent.page
     until !(search_page.at_css(".np:contains('Next »')")) || @counter == 12
       begin 
@@ -67,7 +68,7 @@ class JobLink < ActiveRecord::Base
               next
             end
           end 
-          agent.click search_page.at(".np:contains('Next »')").parent.parent
+          agent.get "#{search_page.uri}&start=#{@counter}0"
           puts "===\n\n#{agent.page.uri}"
       rescue Exception => e
          puts e
