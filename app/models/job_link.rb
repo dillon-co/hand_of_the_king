@@ -58,7 +58,7 @@ class JobLink < ActiveRecord::Base
 
           begin
             click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
-          rescue Exception => e
+          rescueex => e
             puts "#{e}"
             next
           end
@@ -70,7 +70,6 @@ class JobLink < ActiveRecord::Base
 
 
   def click_easily_applicable_link(agent, title, job_attributes, path_to_resume)
-    begin
       agent.click title.css('a').first  
       if !(agent.page.uri.to_s.match(/indeed.com\/jobs?/)) && !!(agent.page.uri.to_s.match(/indeed.com/))
         puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
@@ -84,9 +83,7 @@ class JobLink < ActiveRecord::Base
                                            user_resume_path: path_to_resume,
                                            user_cover_letter: user_attribute_array[3]) 
       end
-    rescue Exception => e
-      puts e
-    end  
+
   end  
 
   def user_attribute_array
