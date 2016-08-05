@@ -58,7 +58,7 @@ class JobLink < ActiveRecord::Base
 
           begin
             click_easily_applicable_link(agent, title, job_title_company_location_array, path_to_resume)
-          rescueex => e
+          rescue => e
             puts "#{e}"
             next
           end
