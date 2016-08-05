@@ -92,7 +92,7 @@ class JobLink < ActiveRecord::Base
     rescue Exception => e
       puts e 
       puts "no page here"     
-      next
+      return
     end  
   end  
 
