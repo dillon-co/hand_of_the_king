@@ -2,8 +2,10 @@
 <div class="jumbotron">
   <% @job_applications.each  do |job| %>
     <div>
-      <h2><%= job.title %></h2>
+
+      <h2><%= job.title != '' ? job.title : job.job_link.job_title %></h2>
       <h6><%= job.company %>; <%= job.location %></h6>
+      <hr>
     </div>
   <% end %>
 </div>
