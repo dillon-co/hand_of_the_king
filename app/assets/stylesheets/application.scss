@@ -13,7 +13,7 @@
  */
 @import "bootstrap";
 
-h1,h2,h3,h4,h5,h6,p,label,input,a,em{
+h2,h3,h4,h5,h6,p,label,input,a,em{
   font-family: 'Montserrat', sans-serif;
   color: rgba(0,0,0,0.87);
   // font-family: 'Amaranth', sans-serif;
@@ -24,6 +24,11 @@ h1,h2,h3,h4,h5,h6,p,label,input,a,em{
     // background-color: #8F7946;
     border: none;
   }
+h1{
+  color: rgb(112,51,130);
+  font-family: 'Montserrat', sans-serif;
+}
+
 
 .sign-up{
   margin-top: 20px;
