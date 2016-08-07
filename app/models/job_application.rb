@@ -89,26 +89,28 @@ class JobApplication < ActiveRecord::Base
 
   def apply_to_job
 
+    if self.applied_to == true
 
-    puts "\n\n\n\n\n#{'8'*20}#{indeed_link} ---------- id: #{id}\n\n\n\n"
+      puts "\n\n\n\n\n#{'8'*20}#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
-    browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
-    browser.goto indeed_link
-    if browser.span(id: /indeed-ia/).exists?
-      browser.span(id: /indeed-ia/).click
-      puts "clicked modal button"
-      sleep 3.5
-      if browser.iframe(id: /indeed-ia/).exists?
-        input_frame = browser.iframe(id: /indeed-ia/).iframe
-        if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present? 
-          fill_out_modal_with_text_first(input_frame)     
-        else
-          fill_out_modal_with_text_last(input_frame)
-        end  
-        self.update(applied_to: true) 
-      end
-    end    
-    browser.close
+      browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
+      browser.goto indeed_link
+      if browser.span(id: /indeed-ia/).exists?
+        browser.span(id: /indeed-ia/).click
+        puts "clicked modal button"
+        sleep 3.5
+        if browser.iframe(id: /indeed-ia/).exists?
+          input_frame = browser.iframe(id: /indeed-ia/).iframe
+          if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present? 
+            fill_out_modal_with_text_first(input_frame)     
+          else
+            fill_out_modal_with_text_last(input_frame)
+          end  
+          self.update(applied_to: true) 
+        end
+      end    
+      browser.close
+    end  
   end
 
    def user_resume
