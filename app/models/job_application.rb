@@ -89,7 +89,7 @@ class JobApplication < ActiveRecord::Base
 
   def apply_to_job
 
-    if self.applied_to == true
+    if self.applied_to != true
 
       puts "\n\n\n\n\n#{'8'*20}#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
