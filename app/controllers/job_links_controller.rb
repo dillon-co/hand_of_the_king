@@ -11,7 +11,7 @@ class JobLinksController < ApplicationController
 
   def show
     @job_link = JobLink.find(params[:id])
-    @job_applications = @job_link.job_applications.wehre(should_apply: true)
+    @job_applications = @job_link.job_applications.where(should_apply: true)
   end  
 
   def create
