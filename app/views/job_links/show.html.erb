@@ -3,28 +3,28 @@
   <h1>Jobs You've Applied To</h1>
 </div>
 
-<div class="">
-  <%= form_for @job_link do |f| %>
+<br>
+<br>
+<div class="container">
+ 
     <div class='col-lgl-2'>
      <%#= f.submit "Apply To Selected", class: 'btn btn-primary' %>
     </div>
     <br>
     <br> 
      <% @job_applications.each  do |job| %>
-       <%= f.fields_for "job[]", job do |job_field| %>
         <div>
          <span class='col-lg-11'>
            <h4><%= job.title != '' ? job.title : job.job_link.job_title.titleize %></h4>
            <h6><%= job.company %>; <%= job.location %></h6>
          </span>
-          <!-- <span class='col-lg-1'><%= job_field.check_box :should_apply, {checked: true} %></span> -->
+          
         </div>
           <br>
           <br>
           <hr>
            
-       <% end %>
+
      <% end %>
-  <% end %>   
 </div>
 
