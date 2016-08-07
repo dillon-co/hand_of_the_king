@@ -13,11 +13,13 @@
 #  company           :string
 #  location          :string
 #  pay_rate          :string
+#  applied_to        :boolean          default(FALSE)
 #  pay_type          :integer
 #  description       :text
 #  job_link_id       :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  should_apply      :boolean          default(TRUE)
 #
 
 require 'capybara/poltergeist'
@@ -31,7 +33,7 @@ class JobApplication < ActiveRecord::Base
   # after_save :apply_to_job, unless: :applied_to 
 
   def fill_out_modal_with_text_first(input_frame)
-    fill_out_text_form(input_frame)
+    fill_out_text_form(input_frame) 
     if input_frame.button(id: 'apply').present?
       input_frame.button(id: 'apply').click
       puts "applied"
@@ -91,18 +93,20 @@ class JobApplication < ActiveRecord::Base
 
     browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
     browser.goto indeed_link
-    browser.span(id: /indeed-ia/).click
-    puts "clicked modal button"
-    sleep 3.5
-    if browser.iframe(id: /indeed-ia/).exists?
-      input_frame = browser.iframe(id: /indeed-ia/).iframe
-      if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present? 
-        fill_out_modal_with_text_first(input_frame)     
-      else
-        fill_out_modal_with_text_last(input_frame)
-      end  
-      self.update(applied_to: true) 
-    end  
+    if browser.span(id: /indeed-ia/).exists?
+      browser.span(id: /indeed-ia/).click
+      puts "clicked modal button"
+      sleep 3.5
+      if browser.iframe(id: /indeed-ia/).exists?
+        input_frame = browser.iframe(id: /indeed-ia/).iframe
+        if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present? 
+          fill_out_modal_with_text_first(input_frame)     
+        else
+          fill_out_modal_with_text_last(input_frame)
+        end  
+        self.update(applied_to: true) 
+      end
+    end    
     browser.close
   end
 
