@@ -36,7 +36,7 @@ class JobLinksController < ApplicationController
       JobApplication.find(id).update(should_apply: params["job_link"]["job"][id.to_s]["should_apply"])
     end  
     if @job_link.save
-      redirect_to job_links_path
+      redirect_to job_link_path(@job_link)
     else
       render :new
     end    
