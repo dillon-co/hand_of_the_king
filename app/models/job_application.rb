@@ -89,7 +89,8 @@ class JobApplication < ActiveRecord::Base
 
   def apply_to_job
 
-    puts "\n\n\n\n\n#{'8'*20}#{indeed_link}\n\n\n\n"
+
+    puts "\n\n\n\n\n#{'8'*20}#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
     browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
     browser.goto indeed_link
