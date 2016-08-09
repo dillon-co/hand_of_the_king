@@ -88,8 +88,8 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def apply_to_job
-
-    if self.applied_to != true
+    @counter = 0
+    until self.applied_to == true || @counter == 3
 
       puts "\n\n\n\n\n#{'8'*20}#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
@@ -110,6 +110,7 @@ class JobApplication < ActiveRecord::Base
         end
       end    
       browser.close
+      @counter += 1
     end  
   end
 

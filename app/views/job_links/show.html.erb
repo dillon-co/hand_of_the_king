@@ -14,12 +14,15 @@
     <br> 
      <% @job_applications.each  do |job| %>
         <div>
-         <span class='col-lg-11'>
-           <h4><%= job.title != '' ? job.title : job.job_link.job_title.titleize %></h4>
-           <h6><%= job.company %>; <%= job.location %></h6>
-         </span>
+         <div class='col-lg-11'>
+           <h3 class="title"><%= job.title != '' ? job.title : job.job_link.job_title.titleize %></h3>
+           <h5><%= job.company %>; <%= job.location %></h5>
+           <p><%= link_to "Description on Indeed.com", job.indeed_link %></p>
+         </div>
           
         </div>
+          <br>
+          <br>
           <br>
           <br>
           <hr>
