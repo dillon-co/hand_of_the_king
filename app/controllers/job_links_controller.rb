@@ -30,6 +30,7 @@ class JobLinksController < ApplicationController
 
   def update
     @job_link = JobLink.find(params[:id])
+    current_user.update(credits: current_user.credits-1)
     # @job_link.update(job_link_params)  
     ids = params["job_link"]["job"].keys.map{ |k| k.to_i }
     ids.each do |id|
