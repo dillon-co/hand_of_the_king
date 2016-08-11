@@ -24,6 +24,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #   gem 'unicorn'
 gem 'puma'
 
+gem 'stripe'
+
 gem 'sidekiq'
 gem "sidekiq-cron", "~> 0.4.0"
 gem 'sinatra', :require => nil

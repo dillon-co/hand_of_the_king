@@ -5,8 +5,12 @@ end
 
 def create
    # Amount in cents
-  @amount = 1000
+  @amount = 1997
   token = params[:stripeToken]
+
+  current_credits = current_user.credits
+
+  current_user.update(credits: current_credits+3)
 
   customer = Stripe::Customer.create(
     card: token,

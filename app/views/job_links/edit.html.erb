@@ -1,13 +1,27 @@
-<div class='col-lg-10'>
-  <br>
-  <h1>Jobs We Found</h1>
-  <h3 class='subtitle'><%= @job_applications.count %> Jobs Available!</h3>
+<div class="row">
+  <div class='col-lg-10'>
+    <br>
+    <h1>Jobs We Found</h1>
+    <h3 class='subtitle'><%= @job_applications.count %> Jobs Available!</h3>
+  </div>
+
+  <div class='col-lg-2'>
+    <br>
+    <h4><%= @job_link.user.credits %> Credits!</h4>
+  </div>  
 </div>
 
+<br>
+<br>
 <div class="">
   <%= form_for @job_link do |f| %>
-    <div class='col-lgl-2'>
-     <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+    <div class=''>
+     <% if @job_link.user.credits <= 1 %>
+      <h4>Apply To All With 1 Credit</h4> 
+      <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
+     <% else %> 
+       <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+     <% end %>  
     </div>
     <br>
     <br> 

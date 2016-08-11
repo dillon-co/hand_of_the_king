@@ -1,0 +1,29 @@
+<div id="myCarousel" class="jumbotron">
+  <div class="container">
+    <div class="text-lg-left">
+      <h1>What Are Credits?</h1>
+      <p>Credits are used for applying to multiple jobs at once. You can do it the old fashioned way and apply to each one individually, or you can become the wizard you were born to be, and apply to all of them at the same time.</p><br><p> Each credit is an acceptance letter to Hogwarts, we promise.</p>
+    </div>
+  </div>
+</div> 
+
+<div class="container marketing">
+    <!-- Three columns of text below the carousel -->
+  <div class="row">
+    <div class="col-lg-4 product-div jumbotron panel">      
+      <h2>1 Credit</h2>
+      <p>$7.99</p>
+      <p><%= link_to "Purchase", new_charge_path(credits: 1, amount:799), class: 'btn btn-primary' %></p>
+    </div><!-- /.col-lg-4 product-div jumbotron panel -->
+    <div class="col-lg-4 product-div jumbotron panel ">
+      <h1>3 Credits</h1>
+      <h5>$19.97</h5>
+      <p><%= link_to "Purchase", new_charge_path(credits: 3, amount:1997), class: 'btn btn-lg btn-primary' %></p>
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4 product-div jumbotron panel">
+      <h2>10 Credits</h2>
+      <p>$49.97</p>
+      <p><%= link_to "Purchase", new_charge_path(credits: 10, amount:4997), class: 'btn btn-primary' %></p>
+    </div><!-- /.col-lg-4 product-div -->
+  </div><!-- /.row -->
+</div>

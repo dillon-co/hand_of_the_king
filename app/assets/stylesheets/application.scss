@@ -29,6 +29,17 @@ h1{
   font-family: 'Montserrat', sans-serif;
 }
 
+.product-div{
+  text-align: center;
+  background-color: rgb(255,255,255);
+  border-style: groove;
+  border-radius: 20px;
+  h2,h1{
+    text-decoration: underline;
+  }
+
+}
+
 .title{
   color: rgb(112,51,130);  
 }

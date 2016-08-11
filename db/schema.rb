@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806161951) do
+ActiveRecord::Schema.define(version: 20160810225918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,41 @@ ActiveRecord::Schema.define(version: 20160806161951) do
 
   add_index "job_links", ["user_id"], name: "index_job_links_on_user_id", using: :btree
 
+  create_table "recruiters", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "recruiters", ["email"], name: "index_recruiters_on_email", unique: true, using: :btree
+  add_index "recruiters", ["reset_password_token"], name: "index_recruiters_on_reset_password_token", unique: true, using: :btree
+
+  create_table "referral_codes", force: :cascade do |t|
+    t.integer  "recruiter_id"
+    t.integer  "user_id"
+    t.string   "code"
+    t.integer  "number_of_users"
+    t.integer  "paid_user_uses"
+    t.integer  "number_of_recruiters"
+    t.integer  "paid_recruiter_uses"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "referral_codes", ["recruiter_id"], name: "index_referral_codes_on_recruiter_id", using: :btree
+  add_index "referral_codes", ["user_id"], name: "index_referral_codes_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",                          null: false
     t.string   "last_name",                           null: false
@@ -71,6 +106,7 @@ ActiveRecord::Schema.define(version: 20160806161951) do
     t.string   "resume_content_type",                 null: false
     t.integer  "resume_file_size",                    null: false
     t.datetime "resume_updated_at",                   null: false
+    t.integer  "credits",                default: 2
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

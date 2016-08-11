@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get 'about' => 'pages#about', as: :about
 
+  get 'products' => 'pages#price_page', as: :price_page
+
   resources :charges
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
