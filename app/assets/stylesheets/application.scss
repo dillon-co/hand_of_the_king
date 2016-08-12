@@ -30,14 +30,31 @@ h1{
 }
 
 .product-div{
+  // padding: 5px;
+  margin-top: 0.7em;
+  width: 20em;
+  margin-right: 15px;
+  margin-left: 15px;
   text-align: center;
   background-color: rgb(255,255,255);
-  border-style: groove;
   border-radius: 20px;
+  border-style: groove;
   h2,h1{
     text-decoration: underline;
   }
 
+}
+
+.mid-product-div{
+  // padding: 5px;
+  width: 25em;
+  text-align: center;
+  border-style: groove;
+  border-radius: 20px;
+  background-color: rgba(71,206,154,0.2);
+  h1{
+    text-decoration: underline;
+  }
 }
 
 .title{
