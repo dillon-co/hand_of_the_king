@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810225918) do
+ActiveRecord::Schema.define(version: 20160815204235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 20160810225918) do
     t.string   "resume_content_type",                 null: false
     t.integer  "resume_file_size",                    null: false
     t.datetime "resume_updated_at",                   null: false
-    t.integer  "credits",                default: 2
+    t.integer  "credits",                default: 1
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
