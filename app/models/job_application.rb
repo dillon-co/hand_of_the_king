@@ -38,12 +38,19 @@ class JobApplication < ActiveRecord::Base
       input_frame.button(id: 'apply').click
       puts "applied"
     else  
-      input_frame.a(class: 'form-page-next').click
-      click_checkboxes(input_frame)
+      counter = 0 
+      until counter == 3
+        # Watir::Wait.until { input_frame.a(class: 'form-page-next').present? }
+        if input_frame.links(class: 'form-page-next')[counter].present? 
+          input_frame.links(class: 'form-page-next')[counter].click
+          click_checkboxes(input_frame)
+        end  
+          puts "#{counter+=1}"
+      end  
       input_frame.button(id: 'apply').click
       puts "applied"
-    end        
-  end 
+    end    
+  end
 
   def fill_out_modal_with_text_last(input_frame)
     click_checkboxes(input_frame)
@@ -69,54 +76,96 @@ class JobApplication < ActiveRecord::Base
     puts "filling out phone number"
     input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
     puts "uploading resume"
-    input_frame.file_field.set user_resume
+    upload_resume(input_frame)
     puts "writing cover letter"
     input_frame.text_field(id: 'applicant.applicationMessage').set user_cover_letter
   end  
 
   def click_checkboxes(input_frame)
     puts "checkin boxes"
-    if input_frame.radio.present?
+    # byebug
+    if input_frame.div(id: "q_0").present?
+      puts "radio frame is present"
       %w(0 1 2 3 4).each do |question_number|
-        if input_frame.div(id: "q_#{question_number}").exists?
+        if input_frame.div(id: "q_#{question_number}").present?
+          puts "found radio # #{question_number}"
           input_frame.div(id: "q_#{question_number}").radio(value: "0").set
         else
-          break
+          next
         end
       end
     end
-  end  
+    puts "boxes checked"
+  end 
+
+  def open_modal(browser)
+    # byebug
+    puts "not found"
+    if browser.span(text: "Apply Now").exists?
+      puts "found at browser.span(text: 'Apply Now')"
+      browser.span(text: "Apply Now").click
+      true
+    elsif browser.span(id: /indeed-ia/).exists?
+      puts "found at browser.span(id: /indeed-ia/)"
+      browser.span(id: /indeed-ia/).click
+      true
+    elsif browser.a(id: /indeed-ia/).exists?
+      puts "found at browser.a(id: /indeed-ia/)"
+      browser.a(class: /indeed-id/).click
+      true
+    elsif browser.span(class: "indeed-apply-button-inner").exists?
+      puts "found at browser.span(class: 'indeed-apply-button-inner')"
+      browser.span(class: "indeed-apply-button-inner").click
+    else 
+      puts "cant find" 
+      false  
+    end  
+  end 
 
   def apply_to_job
     @counter = 0
     if self.should_apply == true  
       until self.applied_to == true || @counter == 3
-
-        puts "\n\n\n\n\n#{'8'*20}#{indeed_link} ---------- id: #{id}\n\n\n\n"
+        begin 
+        puts "\n\n\n\n\n#{'∞∞∞∞∞∞∞∞∞'*20}\n\n#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
         browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
+        # browser.driver.manage.timeouts.implicit_wait = 3 #3 seconds
         browser.goto indeed_link
-        if browser.span(id: /indeed-ia/).exists?
-          browser.span(id: /indeed-ia/).click
+        if open_modal(browser)  
           puts "clicked modal button"
           sleep 3.5
           if browser.iframe(id: /indeed-ia/).exists?
+            puts "found"
             input_frame = browser.iframe(id: /indeed-ia/).iframe
-            if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present? 
-              fill_out_modal_with_text_first(input_frame)     
+            if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present?  
+                fill_out_modal_with_text_first(input_frame)        
             else
               fill_out_modal_with_text_last(input_frame)
             end  
             self.update(applied_to: true) 
-          end
-        end    
+          end    
+        end
+        rescue => e
+          puts e
+          break
+        end  
         browser.close
         @counter += 1
       end
     end    
   end
 
-   def user_resume
+
+  def upload_resume(input_frame)
+    begin
+      input_frame.file_field.set user_resume   
+    ensure
+      clean_up_temporary_binary_file
+    end  
+  end  
+
+  def user_resume
     Aws.config.update({
       region: 'us-east-1',
       credentials: Aws::Credentials.new(ENV['AMAZON_ACCESS_KEY_ID'], ENV['AMAZON_SECRET_ACCESS_KEY'])
@@ -126,11 +175,18 @@ class JobApplication < ActiveRecord::Base
   end 
 
   def store_and_return_user_resume(s3)
-    f = Tempfile.new(['resume', ".#{user_resume_path.split('.').last}"])
-    f.write(resume_object(s3).read)
-    puts File.open(f)
-    f.path  
+    File.open(local_file_path, "w+") { |f| f.write(resume_object(s3).read)}
+    local_file_path
   end
+  
+  def local_file_path
+    "public/#{user_resume_path.split('/').last}"
+  end  
+
+  def clean_up_temporary_binary_file
+    File.delete(local_file_path)
+  end  
+
 
   def resume_object(s3)
     s3.get_object(bucket: 'job-bot-bucket', key: user_resume_path).body

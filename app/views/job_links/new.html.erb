@@ -2,14 +2,14 @@
   <div class='main-title col-sm-offset-2'>
     <span><h1>Velvidi</h1></span><span><h5 class="beta"></h5></span>
     <div>
-      <span><h5>Multiple applications, one click. </h5></span><!-- <span><h5 class="theta">Like a wizard.</h5></span> -->
+      <span><h5>Apply to multiple jobs with one click. </h5></span><!-- <span><h5 class="theta">Like a wizard.</h5></span> -->
     </div>  
   </div>
   <div class='container-fluid main-jumbo'>
     <%= form_for @job_link do |f| %>
       <div class='col-md-7 col-md-offset-2'>
         <span class='col-lg-5 job-title'>
-          <h4>Job Title</h4>
+          <h4>Job Title / Industry</h4>
           <%= f.text_field :job_title %><br><br />
         </span>
         <span class='col-lg-5'>
@@ -18,9 +18,9 @@
         </span>
       <div class='col-lg-2 button-element' align='center' >
         <% if user_signed_in?  %>
-          <%= f.submit "Apply", class: 'btn btn-primary' %>
+          <%= f.submit "Explore", class: 'btn btn-primary' %>
         <% else %>
-          <%= link_to "Apply", new_user_session_path, class: 'btn btn-primary' %>  
+          <%= link_to "Explore", new_user_session_path, class: 'btn btn-primary' %>  
          <% end %>
         </div>   
       </div>  
