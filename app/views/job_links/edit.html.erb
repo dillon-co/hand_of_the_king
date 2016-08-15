@@ -43,6 +43,12 @@
            
        <% end %>
      <% end %>
+     <% if @job_link.user.credits <= 1 %>
+      <h4>Apply To All With 1 Credit</h4> 
+      <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
+     <% else %> 
+       <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+     <% end %>  
   <% end %>   
 </div>
 
