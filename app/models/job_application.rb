@@ -44,6 +44,8 @@ class JobApplication < ActiveRecord::Base
         if input_frame.links(class: 'form-page-next')[counter].present? 
           input_frame.links(class: 'form-page-next')[counter].click
           click_checkboxes(input_frame)
+        else
+          break  
         end  
           puts "#{counter+=1}"
       end  

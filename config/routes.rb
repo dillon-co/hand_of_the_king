@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
 
+  devise_for :recruiters
   get 'pages/about'
 
   mount Sidekiq::Web => '/sidekiq'

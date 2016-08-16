@@ -47,8 +47,10 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true, on: :create       
   validates :last_name, presence: true, on: :create
 
+  # belongs_to :recruiters
 
   has_many :job_links
+
 
 
 

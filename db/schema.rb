@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815204235) do
+ActiveRecord::Schema.define(version: 20160815224407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,20 +51,24 @@ ActiveRecord::Schema.define(version: 20160815204235) do
   add_index "job_links", ["user_id"], name: "index_job_links_on_user_id", using: :btree
 
   create_table "recruiters", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "name",                         default: "", null: false
+    t.string   "email",                        default: "", null: false
+    t.string   "encrypted_password",           default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.string   "address"
+    t.string   "parent_code"
+    t.string   "referral_code"
+    t.integer  "referred_user_purchases"
+    t.integer  "referred_recruiter_purchases"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_index "recruiters", ["email"], name: "index_recruiters_on_email", unique: true, using: :btree
@@ -86,27 +90,31 @@ ActiveRecord::Schema.define(version: 20160815204235) do
   add_index "referral_codes", ["user_id"], name: "index_referral_codes_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",                          null: false
-    t.string   "last_name",                           null: false
+    t.string   "first_name",                                  null: false
+    t.string   "last_name",                                   null: false
     t.string   "phone_number"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                          default: "", null: false
+    t.string   "encrypted_password",             default: "", null: false
     t.text     "cover_letter"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                  default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "resume_file_name",                    null: false
-    t.string   "resume_content_type",                 null: false
-    t.integer  "resume_file_size",                    null: false
-    t.datetime "resume_updated_at",                   null: false
-    t.integer  "credits",                default: 1
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "resume_file_name",                            null: false
+    t.string   "resume_content_type",                         null: false
+    t.integer  "resume_file_size",                            null: false
+    t.datetime "resume_updated_at",                           null: false
+    t.integer  "credits",                        default: 1
+    t.string   "parent_code"
+    t.string   "referral_code"
+    t.integer  "referred_users_purchases_count"
+    t.string   "current_discount"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
