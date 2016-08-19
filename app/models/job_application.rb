@@ -32,27 +32,19 @@ class JobApplication < ActiveRecord::Base
   belongs_to :job_link
   # after_save :apply_to_job, unless: :applied_to 
 
-  def fill_out_modal_with_text_first(input_frame)
+   def fill_out_modal_with_text_first(input_frame)
     fill_out_text_form(input_frame) 
     if input_frame.button(id: 'apply').present?
       input_frame.button(id: 'apply').click
       puts "applied"
     else  
-      counter = 0 
-      until counter == 3
-        # Watir::Wait.until { input_frame.a(class: 'form-page-next').present? }
-        if input_frame.links(class: 'form-page-next')[counter].present? 
-          input_frame.links(class: 'form-page-next')[counter].click
-          click_checkboxes(input_frame)
-        else
-          break  
-        end  
-          puts "#{counter+=1}"
-      end  
+      input_frame.a(class: 'form-page-next').click
+      click_checkboxes(input_frame)
       input_frame.button(id: 'apply').click
       puts "applied"
-    end    
-  end
+    end        
+  end 
+
 
   def fill_out_modal_with_text_last(input_frame)
     click_checkboxes(input_frame)
@@ -150,7 +142,6 @@ class JobApplication < ActiveRecord::Base
         end
         rescue => e
           puts e
-          break
         end  
         browser.close
         @counter += 1

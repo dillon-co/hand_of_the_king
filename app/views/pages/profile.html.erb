@@ -1,0 +1,46 @@
+<% if user_signed_in? %>
+  <div class='row'>
+    <div  class='main-title'>
+      <div class= 'col-md-10'>
+        <h1><%= @user.first_name %> <%= @user.last_name %></h1>
+      </div>
+      <div class='col-md-2'>
+         <h4><%= @user.credits %> Credits Available</h4>
+      </div>  
+    </div> 
+  </div> 
+  <br>
+  <div class='row'>
+    <div class="col-md-4">
+      <div class="jumbotron">
+      <h3><%= @job_links.count %> Jobs Searched For</h3>
+      </div>  
+    </div>  
+    <div class="col-md-4">
+      <div class="jumbotron">
+      <h3><%= @job_applications_count %> Applications Submited</h3>
+      </div>  
+    </div>  
+    <div class="col-md-4">
+      <div class="jumbotron">
+      <% if @users_friends_count > 0 %>
+        <h5><%= @users_friends_count %> Friends Referred</h>
+      <% end %>
+        <%= link_to "Refer Friends", share_path, class:'btn btn-primary' %>
+      </div>  
+    </div>
+  </div>
+
+<%= link_to share_path do %>
+  <div class="jumbotron invite_friends_div">
+    <h1>Invite Friends, Get Paid!</h1>
+  </div>  
+<% end %>
+
+<% if !!@user.money_earned %>
+  <div class='jumbotron'>
+    <h2 class='col-lg-10'>$<%= @user.money_earned %> in your account!</h2>
+    <%= link_to "Cash Out", share_path, class:'btn btn-primary col-lg-2' %>
+  </div>
+<% end %>    
+<% end %>

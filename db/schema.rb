@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815224407) do
+ActiveRecord::Schema.define(version: 20160817194617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20160815224407) do
     t.string   "referral_code"
     t.integer  "referred_users_purchases_count"
     t.string   "current_discount"
+    t.integer  "money_earned"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

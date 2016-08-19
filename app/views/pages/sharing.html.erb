@@ -1,0 +1,49 @@
+<div class="row">
+<div class="col-md-4 jumbotron share-tron">
+  <div class="icon">
+    <i class="material-icons">&#xE7F0;</i>
+  </div>  
+  <h3>Invite A Friend</h3>
+</div>
+<div class="col-md-4 jumbotron share-tron">
+  <div class="icon">
+    <i class="material-icons">&#xE0DF;</i>
+  </div>  
+  <h3>They Get 25% Off</h3><h3 class="attention-word"><strong> For Life</strong></h3>
+</div>
+<div class="col-md-4 jumbotron share-tron">
+  <div class="icon">
+    <i class="material-icons">&#xE815;</i>
+  </div>  
+  <h3>You get $3 <strong class='attention-word'>every</strong> time they buy</h3>
+</div>
+</div>  
+
+  <div class='jumbotron link-tron'>
+    <div class='row'>
+      <h1>Share This Link</h1>
+      <div class="container">
+          <% if user_signed_in? %>
+        <div class="share-tron col-lg-offset-2 col-lg-8">
+            <h2><%= @share_url %></h2>
+        </div>
+          <% else %>
+            <%= link_to "Sign in to get your code", new_user_session_path, class: 'btn btn-primary'%>
+          <% end %>        
+      </div>
+    </div>
+    <br>
+    <div class='row'>
+    <% if user_signed_in? %>  
+      <h3>Or Just The Code</h3>
+      <div class="container">
+        <div class="share-tron col-lg-offset-5 col-lg-2">
+          <h5><%= @user.referral_code %></h5>
+        </div>
+      </div>
+     <% end %> 
+    </div>
+  </div>
+
+
+

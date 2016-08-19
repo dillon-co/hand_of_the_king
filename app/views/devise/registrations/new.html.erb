@@ -21,31 +21,40 @@
   </div >  
 
 
-<div class="col-md-6">
-  <h3>Account Info</h3>
-  <div class="field">
-    <%= f.label       :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+  <div class="col-md-6">
+    <h3>Account Info</h3>
+    <div class="field">
+      <%= f.label       :email %><br />
+      <%= f.email_field :email, autofocus: true %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
+    <div class="field">
+      <% if params['d'] != nil %>
+        <%= f.hidden_field :parent_code, :value => params['d'] %>
+      <% else %>
+        <%= f.label "Have A Referral Code?" %><br />
+        <%= f.text_field :parent_code %>
+      <% end %>    
+    </div>  
+    <br />
+    <div class="actions">
+      <%= f.submit "Sign up", class: 'btn btn-primary' %>
+    <%= render "devise/shared/links" %>
+    </div>
   </div>
-  <br />
-  <div class="actions">
-    <%= f.submit "Sign up", class: 'btn btn-primary' %>
-  <%= render "devise/shared/links" %>
-  </div>
-</div>
+  
 <% end %>
 
 </div>

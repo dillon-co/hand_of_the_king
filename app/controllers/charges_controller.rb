@@ -11,6 +11,10 @@ def create
 
   current_credits = current_user.credits
 
+  if current_user.parent_code != nil
+    current_user.update_parent_user
+  end  
+
   current_user.update(credits: current_credits+params[:credits].to_i)
 
   customer = Stripe::Customer.create(

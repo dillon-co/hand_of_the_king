@@ -11,13 +11,23 @@ Rails.application.routes.draw do
   get 'thank-you' => "job_links#info_page"
 
   resources :job_applications
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: { registrations: 'users/registrations' } 
+
+
+  devise_scope :user do 
+    get 'ref' => 'users/registrations#new'
+  end  
 
   root to: "job_links#new" 
 
   get 'about' => 'pages#about', as: :about
 
   get 'products' => 'pages#price_page', as: :price_page
+
+
+  get 'share' => 'pages#sharing', as: :share
+
+  get 'profile' => 'pages#profile', as: :profile
 
   resources :charges
   # The priority is based upon order of creation: first created -> highest priority.

@@ -45,6 +45,33 @@ h1{
 
 }
 
+.share-tron{
+  // width: em;
+  // margin-right: 50px;
+  // margin-left: 10px;
+  text-align: center;
+  background-color: rgb(255,255,255);
+  border-radius: 0px;
+  border-style: thin;
+  .attention-word{
+    color:  #47CE9A;
+  }
+  .icon{
+    margin-bottom: 20px;
+
+    // border-bottom: 1px solid rgba(0,0,0,0.6);
+    i{
+      color: rgb(112,51,130);
+      font-size: 75px;
+      // text-decoration: underline;
+    }
+  }
+}
+
+.link-tron{
+  text-align: center;
+}
+
 .mid-product-div{
   // padding: 5px;
   width: 25em;
@@ -72,6 +99,12 @@ h1{
 .cover-letter{
   min-width: 500px;
   min-height: 247px;
+}
+
+.invite_friends_div{
+   text-align: center;
+   background-color: rgba(71,206,154,0.2);
+   text-decoration: underline;
 }
 
 .main-title{
