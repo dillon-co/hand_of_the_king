@@ -75,7 +75,7 @@ class User < ActiveRecord::Base
   def update_parent_user
     parent = User.find_by(referral_code: parent_code)
     past_money_earned = parent.money_earned
-    !!past_money_earned ? parent.update(money_earned: past_money_earned+2) : parent.update(money_earned: 2)
+    !!past_money_earned ? parent.update(money_earned: past_money_earned+3) : parent.update(money_earned: 3)
   end  
 
 end
