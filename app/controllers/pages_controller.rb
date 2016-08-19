@@ -21,5 +21,8 @@ class PagesController < ApplicationController
       @user = current_user
       @share_url = "#{root_url.split('//').last}ref?d=#{@user.referral_code}"
     end  
-  end  
+  end 
+
+  def mission
+  end 
 end

@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   get 'profile' => 'pages#profile', as: :profile
 
+  get 'master_plan' => 'pages#mission', as: :master_plan
+
   resources :charges
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

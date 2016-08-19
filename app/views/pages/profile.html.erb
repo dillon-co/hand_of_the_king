@@ -6,6 +6,7 @@
       </div>
       <div class='col-md-2'>
          <h4><%= @user.credits %> Credits Available</h4>
+        <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'btn btn-primary' %>  
       </div>  
     </div> 
   </div> 
@@ -39,8 +40,12 @@
 
 <% if !!@user.money_earned %>
   <div class='jumbotron'>
-    <h2 class='col-lg-10'>$<%= @user.money_earned %> in your account!</h2>
-    <%= link_to "Cash Out", share_path, class:'btn btn-primary col-lg-2' %>
+    <div class='row'>
+      <h2 class=''>$<%= @user.money_earned %> in your account!</h2>
+      <div class=''>
+        <%= link_to "Cash Out", share_path, class:'btn btn-primary' %>
+      </div>
+    </div>
   </div>
 <% end %>    
 <% end %>
