@@ -3,10 +3,7 @@
   <ul class="nav navbar-nav">
     <li class="nav-item pull-right">
       <%= link_to "About", about_path, class: 'nav-link' %>
-
     </li>
-
-
       <% if user_signed_in? %>
        <li class='nav-item active pull-lg-right'>
         <%= link_to "Share", share_path, class: 'navbar-brand' %>
