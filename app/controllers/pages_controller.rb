@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   def sharing
     if user_signed_in?
       @user = current_user
-      @share_url = "#{root_url}ref?d=#{@user.referral_code}"
+      @share_url = "#{root_url.split('//').last}ref?d=#{@user.referral_code}"
     end  
   end  
 end
