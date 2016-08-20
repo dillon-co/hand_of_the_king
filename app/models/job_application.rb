@@ -38,13 +38,15 @@ class JobApplication < ActiveRecord::Base
       input_frame.button(id: 'apply').click
       puts "applied"
     else  
-      input_frame.a(class: 'form-page-next').click
+      input_frame.a(class: 'button_content').click
+
+
       click_checkboxes(input_frame)
       if input_frame.button(id: 'apply').present? 
         input_frame.button(id: 'apply').click
         puts "applied"
       else
-        input_frame.a(class: 'form-page-next').click
+        input_frame.a(class: 'button_content').click
         click_checkboxes(input_frame)
         input_frame.button(id: 'apply').click
         puts "applied"
@@ -77,30 +79,35 @@ class JobApplication < ActiveRecord::Base
     puts "filling out phone number"
     input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
     puts "uploading resume"
-    upload_resume(input_frame)
+    begin
+      # user_resume 
+      input_frame.file_field.set user_resume
+    ensure
+      clean_up_temporary_binary_file
+    end  
     puts "writing cover letter"
     input_frame.text_field(id: 'applicant.applicationMessage').set user_cover_letter
   end  
 
   def click_checkboxes(input_frame)
     puts "checkin boxes"
-    # byebug
-    # if input_frame.div(id: "q_0").present?
+
+    if input_frame.div(id: "q_0").present?
       puts "radio frame is present"
       %w(0 1 2 3 4).each do |question_number|
-        # if input_frame.div(id: "q_#{question_number}").present?
+        if input_frame.div(id: "q_#{question_number}").present?
           puts "found radio # #{question_number}"
           input_frame.div(id: "q_#{question_number}").radio(value: "0").set
-        # else
-        #   next
-        # end
+        else
+          next
+        end
       end
-    # end
+    end
     puts "boxes checked"
   end 
 
   def open_modal(browser)
-    # byebug
+
     puts "not found"
     if browser.span(text: "Apply Now").exists?
       puts "found at browser.span(text: 'Apply Now')"
@@ -156,27 +163,23 @@ class JobApplication < ActiveRecord::Base
     end    
   end
 
-
-  def upload_resume(input_frame)
-    begin
-      input_frame.file_field.set user_resume   
-    ensure
-      clean_up_temporary_binary_file
-    end  
-  end  
-
   def user_resume
     Aws.config.update({
       region: 'us-east-1',
       credentials: Aws::Credentials.new(ENV['AMAZON_ACCESS_KEY_ID'], ENV['AMAZON_SECRET_ACCESS_KEY'])
     }) 
     s3 = Aws::S3::Client.new
+    create_temp_file
     store_and_return_user_resume(s3)
   end 
 
+  def create_temp_file
+    File.new(local_file_path, "w+")
+  end  
+
   def store_and_return_user_resume(s3)
     File.open(local_file_path, "w+") { |f| f.write(resume_object(s3).read)}
-    local_file_path
+    File.absolute_path(local_file_path)
   end
   
   def local_file_path
