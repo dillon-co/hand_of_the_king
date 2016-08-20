@@ -107,7 +107,6 @@ class JobApplication < ActiveRecord::Base
   end 
 
   def open_modal(browser)
-
     puts "not found"
     if browser.span(text: "Apply Now").exists?
       puts "found at browser.span(text: 'Apply Now')"
@@ -135,7 +134,7 @@ class JobApplication < ActiveRecord::Base
     if self.should_apply == true  
       until self.applied_to == true || @counter == 3
         begin 
-        puts "\n\n\n\n\n#{'∞∞∞∞∞∞∞∞∞'*20}\n\n#{indeed_link} ---------- id: #{id}\n\n\n\n"
+        puts "\n\n\n\n\n#{'∞∞∞∞∞∞∞'*20}\n\n#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
         browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
         # browser.driver.manage.timeouts.implicit_wait = 3 #3 seconds
