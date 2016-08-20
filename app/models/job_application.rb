@@ -40,8 +40,15 @@ class JobApplication < ActiveRecord::Base
     else  
       input_frame.a(class: 'form-page-next').click
       click_checkboxes(input_frame)
-      input_frame.button(id: 'apply').click
-      puts "applied"
+      if input_frame.button(id: 'apply').present? 
+        input_frame.button(id: 'apply').click
+        puts "applied"
+      else
+        input_frame.a(class: 'form-page-next').click
+        click_checkboxes(input_frame)
+        input_frame.button(id: 'apply').click
+        puts "applied"
+      end  
     end        
   end 
 
