@@ -85,7 +85,7 @@ class JobApplication < ActiveRecord::Base
   def click_checkboxes(input_frame)
     puts "checkin boxes"
     # byebug
-    if input_frame.div(id: "q_0").present?
+    # if input_frame.div(id: "q_0").present?
       puts "radio frame is present"
       %w(0 1 2 3 4).each do |question_number|
         if input_frame.div(id: "q_#{question_number}").present?
@@ -95,7 +95,7 @@ class JobApplication < ActiveRecord::Base
           next
         end
       end
-    end
+    # end
     puts "boxes checked"
   end 
 
