@@ -88,12 +88,12 @@ class JobApplication < ActiveRecord::Base
     # if input_frame.div(id: "q_0").present?
       puts "radio frame is present"
       %w(0 1 2 3 4).each do |question_number|
-        if input_frame.div(id: "q_#{question_number}").present?
+        # if input_frame.div(id: "q_#{question_number}").present?
           puts "found radio # #{question_number}"
           input_frame.div(id: "q_#{question_number}").radio(value: "0").set
-        else
-          next
-        end
+        # else
+        #   next
+        # end
       end
     # end
     puts "boxes checked"
