@@ -3,27 +3,57 @@
     <div class="text-lg-left">
       <h1>What Are Credits?</h1>
       <p>Credits are used for applying to multiple jobs at once. You can do it the old fashioned way and apply to each one individually, or you can become the wizard you were born to be, and apply to all of them at the same time.</p><br><p> Each credit is an acceptance letter to Hogwarts, we promise.</p>
+      <% if current_user.parent_code != nil %>
+        <br><br>
+        <h3>You get 25% off! </h3>
+        <h5>Because <%= @friend %> thinks highly of you.</h5>
+      <% end %>
     </div>
   </div>
 </div> 
-
-<div class="container marketing">
-    <!-- Three columns of text below the carousel -->
-  <div class="row">
-    <div class="col-lg-4 product-div jumbotron panel">      
-      <h4>1 Credit</h4>
-      <p>$7.99</p>
-      <p><%= link_to "Purchase", new_charge_path(credits: 1, amount:799), class: 'btn btn-primary' %></p>
-    </div><!-- /.col-lg-4 product-div jumbotron panel -->
-    <div class="col-lg-4 mid-product-div jumbotron panel ">
-      <h1>3 Credits</h1>
-      <h5>$19.97</h5>
-      <p><%= link_to "Purchase", new_charge_path(credits: 3, amount:1997), class: 'btn btn-lg btn-primary' %></p>
-    </div><!-- /.col-lg-4 -->
-    <div class="col-lg-4 product-div jumbotron panel">
-      <h4>10 Credits</h4>
-      <p>$49.97</p>
-      <p><%= link_to "Purchase", new_charge_path(credits: 10, amount:4997), class: 'btn btn-primary' %></p>
-    </div><!-- /.col-lg-4 product-div -->
-  </div><!-- /.row -->
-</div>
+<% if current_user.parent_code == nil %>
+    <div class="container marketing">
+        <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4 product-div jumbotron panel">      
+          <h4>1 Credit</h4>
+          <p>$7.99</p>
+          <p><%= link_to "Purchase", new_charge_path(credits: 1, amount:799), class: 'btn btn-primary' %></p>
+        </div><!-- /.col-lg-4 product-div jumbotron panel -->
+        <div class="col-lg-4 mid-product-div jumbotron panel ">
+          <h1>3 Credits</h1>
+          <h5>$19.97</h5>
+          <p><%= link_to "Purchase", new_charge_path(credits: 3, amount:1997), class: 'btn btn-lg btn-primary' %></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 product-div jumbotron panel">
+          <h4>10 Credits</h4>
+          <p>$49.97</p>
+          <p><%= link_to "Purchase", new_charge_path(credits: 10, amount:4997), class: 'btn btn-primary' %></p>
+        </div><!-- /.col-lg-4 product-div -->
+      </div><!-- /.row -->
+    </div>
+<% else %>
+    <div class="container marketing">
+        <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="col-lg-4 product-div jumbotron panel">      
+          <h4>1 Credit</h4>
+          <p class='old-price'>$7.99</p>
+          <h5 class='new-price'>$5.99</h5>
+          <p><%= link_to "Purchase", new_charge_path(credits: 1, amount:499), class: 'btn btn-primary' %></p>
+        </div><!-- /.col-lg-4 product-div jumbotron panel -->
+        <div class="col-lg-4 mid-product-div jumbotron panel ">
+          <h1>3 Credits</h1>
+          <h5 class='old-price'>$19.97</h5>
+          <h4 class='new-price'>$14.98</h4>
+          <p><%= link_to "Purchase", new_charge_path(credits: 3, amount:1498), class: 'btn btn-lg btn-primary' %></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4 product-div jumbotron panel">
+          <h4>10 Credits</h4>
+          <p class='old-price'>$49.97</p>
+          <h5 class='new-price'>$37.48</h5>
+          <p><%= link_to "Purchase", new_charge_path(credits: 10, amount:3748), class: 'btn btn-primary' %></p>
+        </div><!-- /.col-lg-4 product-div -->
+      </div><!-- /.row -->
+    </div>
+<% end %>

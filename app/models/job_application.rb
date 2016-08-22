@@ -38,9 +38,7 @@ class JobApplication < ActiveRecord::Base
       input_frame.button(id: 'apply').click
       puts "applied"
     else  
-      input_frame.a(class: 'button_content').click
-
-
+      input_frame.a(class: 'button_content', text: 'Continue').when_present.click
       click_checkboxes(input_frame)
       if input_frame.button(id: 'apply').present? 
         input_frame.button(id: 'apply').click
@@ -63,36 +61,37 @@ class JobApplication < ActiveRecord::Base
 
   def fill_out_name(input_frame)
     if input_frame.text_field(id: 'applicant.name').present?
-      input_frame.text_field(id: 'applicant.name').set user_name
+      fill_out_text_like_a_human(input_frame.text_field(id: 'applicant.name'), user_name)
     else
-      input_frame.text_field(id: 'applicant.firstName').set user_name.split(' ').first
-      input_frame.text_field(id: 'applicant.lastName').set user_name.split(' ').last
+      fill_out_text_like_a_human(input_frame.text_field(id: 'applicant.firstName'), user_name.split(' ').first)
+      fill_out_text_like_a_human(input_frame.text_field(id: 'applicant.lastName'), user_name.split(' ').last)
     end  
   end 
+
+  def fill_out_text_like_a_human(field, text)
+    text_array = text.split('', 4)
+    text_array.each {|letters| field.set letters }
+    field.set text
+  end  
   
 
   def fill_out_text_form(input_frame)
     puts "filling out name"
     fill_out_name(input_frame)
     puts "filling out email"
-    input_frame.text_field(id: 'applicant.email').set user_email#user.email
+    fill_out_text_like_a_human(input_frame.text_field(id: 'applicant.email'), user_email)
     puts "filling out phone number"
-    input_frame.text_field(id: 'applicant.phoneNumber').set user_phone_number#user.phone_number if user.phone_number != nil
+    fill_out_text_like_a_human(input_frame.text_field(id: 'applicant.phoneNumber'), user_phone_number)#user.phone_number if user.phone_number != nil
     puts "uploading resume"
-    begin
-      # user_resume 
-      input_frame.file_field.set user_resume
-    ensure
-      clean_up_temporary_binary_file
-    end  
+    input_frame.file_field.set user_resume
     puts "writing cover letter"
-    input_frame.text_field(id: 'applicant.applicationMessage').set user_cover_letter
+    fill_out_text_like_a_human(input_frame.text_field(id: 'applicant.applicationMessage'), user_cover_letter)
+    # byebug
   end  
 
   def click_checkboxes(input_frame)
     puts "checkin boxes"
-
-    if input_frame.div(id: "q_0").present?
+    input_frame.div(id: "q_0").when_present do 
       puts "radio frame is present"
       %w(0 1 2 3 4).each do |question_number|
         if input_frame.div(id: "q_#{question_number}").present?
@@ -136,7 +135,7 @@ class JobApplication < ActiveRecord::Base
         begin 
         puts "\n\n\n\n\n#{'∞∞∞∞∞∞∞'*20}\n\n#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
-        browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
+        browser = Watir::Browser.new# :phantomjs, :args => ['--ssl-protocol=tlsv1']
         # browser.driver.manage.timeouts.implicit_wait = 3 #3 seconds
         browser.goto indeed_link
         if open_modal(browser)  
@@ -144,18 +143,20 @@ class JobApplication < ActiveRecord::Base
           sleep 3.5
           if browser.iframe(id: /indeed-ia/).exists?
             puts "found"
+            # byebug
             input_frame = browser.iframe(id: /indeed-ia/).iframe
-            if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present?  
-                fill_out_modal_with_text_first(input_frame)        
-            else
-              fill_out_modal_with_text_last(input_frame)
-            end  
-            self.update(applied_to: true) 
+              if input_frame.text_field(id: 'applicant.name').present? || input_frame.text_field(id: 'applicant.firstName').present?  
+                  fill_out_modal_with_text_first(input_frame)        
+              else
+                fill_out_modal_with_text_last(input_frame)
+              end  
+              self.update(applied_to: true) 
           end    
         end
         rescue => e
           puts e
         end  
+        clean_up_temporary_binary_file
         browser.close
         @counter += 1
       end
@@ -186,7 +187,7 @@ class JobApplication < ActiveRecord::Base
   end  
 
   def clean_up_temporary_binary_file
-    File.delete(local_file_path)
+    File.delete(local_file_path) if File.exist?(local_file_path)
   end  
 
 

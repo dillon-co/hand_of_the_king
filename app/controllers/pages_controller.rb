@@ -4,6 +4,8 @@ class PagesController < ApplicationController
   end
 
   def price_page
+    user = User.find_by(referral_code: current_user.parent_code)
+    @friend = "#{user.first_name} #{user.last_name}"
   end 
 
   def profile
