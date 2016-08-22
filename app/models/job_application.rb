@@ -135,7 +135,7 @@ class JobApplication < ActiveRecord::Base
         begin 
         puts "\n\n\n\n\n#{'∞∞∞∞∞∞∞'*20}\n\n#{indeed_link} ---------- id: #{id}\n\n\n\n"
 
-        browser = Watir::Browser.new# :phantomjs, :args => ['--ssl-protocol=tlsv1']
+        browser = Watir::Browser.new :phantomjs, :args => ['--ssl-protocol=tlsv1']
         # browser.driver.manage.timeouts.implicit_wait = 3 #3 seconds
         browser.goto indeed_link
         if open_modal(browser)  
