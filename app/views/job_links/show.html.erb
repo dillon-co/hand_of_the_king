@@ -1,34 +1,36 @@
-<div class='col-lg-10'>
+<div class='col-lg-9'>
   <br>
   <h1><%= @job_applications.count %> Jobs Applied To</h1>
-  
+  <br>
 </div>
+  <%= link_to "Invite Friends, Get Paid!", share_path, class: 'btn btn-primary col-lg-3' %>
 
 <br>
 <br>
-<div class="container">
- 
-    <div class='col-lgl-2'>
-     <%#= f.submit "Apply To Selected", class: 'btn btn-primary' %>
-    </div>
-    <br>
-    <br> 
-     <% @job_applications.each  do |job| %>
-        <div>
-         <div class='col-lg-11'>
-           <h3 class="title"><%= job.title != '' ? job.title : job.job_link.job_title.titleize %></h3>
-           <h5><%= job.company %>; <%= job.location %></h5>
-           <p><%= link_to "Description on Indeed.com", job.indeed_link, class: 'subtitle' %></p>
-         </div>
-          
-        </div>
-          <br>
-          <br>
-          <br>
-          <br>
-          <hr>
-           
+<div class='row>'>
+  <div class="container">
+   
+      <div class='col-lg-2'>
+       <%#= f.submit "Apply To Selected", class: 'btn btn-primary' %>
+      </div>
+      <br>
+      <br> 
+       <% @job_applications.each  do |job| %>
+          <div>
+           <div class='col-lg-11'>
+             <h3 class="title"><%= job.title != '' ? job.title : job.job_link.job_title.titleize %></h3>
+             <h5><%= job.company %>; <%= job.location %></h5>
+             <p><%= link_to "Description on Indeed.com", job.indeed_link, class: 'subtitle' %></p>
+           </div>
+            
+          </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <hr>
+             
 
-     <% end %>
+       <% end %>
+  </div>
 </div>
-

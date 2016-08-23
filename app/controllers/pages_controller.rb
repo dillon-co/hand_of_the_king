@@ -27,4 +27,8 @@ class PagesController < ApplicationController
 
   def mission
   end 
+
+  def import_success
+    @user = current_user
+  end  
 end
