@@ -1,3 +1,4 @@
+
 require 'sidekiq/web'
 
 config = {
