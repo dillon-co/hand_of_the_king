@@ -16,6 +16,9 @@ class Users::SessionsController < Devise::SessionsController
     redirect_to root_path
   end
 
+  # def sign_out
+  # end  
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
