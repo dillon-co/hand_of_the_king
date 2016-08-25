@@ -70,6 +70,7 @@ class JobLink < ActiveRecord::Base
 
   def create_job_application(agent, title, job_attributes, path_to_resume, indeed_job_url)
     puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
+    if user != nil
         job_applications.find_or_create_by(indeed_link: indeed_job_url,
                                            title: job_attributes[0],
                                            company: job_attributes[1], 
@@ -80,6 +81,13 @@ class JobLink < ActiveRecord::Base
                                            user_resume_path: path_to_resume,
                                            user_cover_letter: user_attribute_array[3]
                                            )
+    else
+      job_applications.find_or_create_by(indeed_link: indeed_job_url,
+                                         title: job_attributes[0],
+                                         company: job_attributes[1], 
+                                         location: job_attributes[2],     
+                                         )
+    end    
   end  
 
 
@@ -89,7 +97,8 @@ class JobLink < ActiveRecord::Base
 
 
   def resume_key
-    user.resume.url.split('http://s3.amazonaws.com/job-bot-bucket/').last.split('?').first
+    
+    user != nil ? user.resume.url.split('http://s3.amazonaws.com/job-bot-bucket/').last.split('?').first : "none"
   end  
 
   def call_search_worker

@@ -15,7 +15,11 @@ class JobLinksController < ApplicationController
   end  
 
   def create
-    job_link = current_user.job_links.new(job_link_params)
+    if user_signed_in?
+      job_link = current_user.job_links.new(job_link_params)
+    else
+      job_link = JobLink.new(job_link_params)
+    end  
     if job_link.save
       redirect_to edit_job_link_path(job_link)
     else
@@ -34,7 +38,7 @@ class JobLinksController < ApplicationController
     # @job_link.update(job_link_params)  
     ids = params["job_link"]["job"].keys.map{ |k| k.to_i }
     ids.each do |id|
-      JobApplication.find(id).update(should_apply: params["job_link"]["job"][id.to_s]["should_apply"])
+      JobApplication.find(id).update(should_apply: params["job_link"]["job"][id.to_s]["should_apply"], user_id: current_user.id)
     end  
     if @job_link.save
       redirect_to job_link_path(@job_link)

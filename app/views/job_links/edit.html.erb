@@ -7,7 +7,9 @@
 
   <div class='col-lg-2'>
     <br>
-    <h4><%= @job_link.user.credits %> Credits!</h4>
+    <% if user_signed_in? %>
+      <h4><%= @job_link.user.credits %> Credits!</h4>
+    <% end %>  
   </div>  
 </div>
 
@@ -17,12 +19,16 @@
 <% if @job_applications.count > 0 %>
     <%= form_for @job_link do |f| %>
         <div class=''>
-         <% if @job_link.user.credits < 1 %>
-          <h4>Apply To All With 1 Credit</h4> 
-          <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
-         <% else %> 
-           <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
-         <% end %>  
+          <% if user_signed_in? %>
+             <% if @job_link.user.credits < 1 %>
+              <h4>Apply To All With 1 Credit</h4> 
+              <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
+             <% else %> 
+               <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+             <% end %>  
+          <% else %>
+            <%= link_to "Apply To Selected", new_user_session_path(j_f: @job_applications.count), class: 'btn btn-lg btn-primary' %>
+          <% end %> 
         </div>
         <br>
         <br> 
@@ -36,21 +42,21 @@
              </span>
               <span class='col-lg-1'><%= job_field.check_box :should_apply, {checked: true} %></span>
             </div>
-              <br>
-              <br>
-              <br>
-              <br>
-              <hr>
-               
            <% end %>
          <% end %>
-         <% if @job_link.user.credits < 1 %>
-          <h4>Apply To All With 1 Credit</h4> 
-          <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
-         <% else %> 
-           <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
-       <% end %>  
+        <% if user_signed_in? %>
+          <% if @job_link.user.credits < 1 %>
+            <h4>Apply To All With 1 Credit</h4> 
+            <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
+          <% else %> 
+             <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+          <% end %>
+         <% else %>
+            <%= link_to "Apply To Selected", new_user_session_path, class: 'btn btn-lg btn-primary' %>
+        <% end %>   
     <% end %>   
   <% end %>
 </div>
-
+<br>
+<br>
+<br>

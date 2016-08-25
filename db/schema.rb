@@ -74,21 +74,6 @@ ActiveRecord::Schema.define(version: 20160817194617) do
   add_index "recruiters", ["email"], name: "index_recruiters_on_email", unique: true, using: :btree
   add_index "recruiters", ["reset_password_token"], name: "index_recruiters_on_reset_password_token", unique: true, using: :btree
 
-  create_table "referral_codes", force: :cascade do |t|
-    t.integer  "recruiter_id"
-    t.integer  "user_id"
-    t.string   "code"
-    t.integer  "number_of_users"
-    t.integer  "paid_user_uses"
-    t.integer  "number_of_recruiters"
-    t.integer  "paid_recruiter_uses"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "referral_codes", ["recruiter_id"], name: "index_referral_codes_on_recruiter_id", using: :btree
-  add_index "referral_codes", ["user_id"], name: "index_referral_codes_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "first_name",                                  null: false
     t.string   "last_name",                                   null: false

@@ -17,11 +17,7 @@
           <%= f.text_field :job_location %><br /><br /> 
         </span>
       <div class='col-lg-2 button-element' align='center' >
-        <% if user_signed_in?  %>
           <%= f.submit "Explore", class: 'btn btn-primary' %>
-        <% else %>
-          <%= link_to "Explore", new_user_session_path, class: 'btn btn-primary' %>  
-         <% end %>
         </div>   
       </div>  
     <% end %>  
