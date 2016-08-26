@@ -1,0 +1,35 @@
+<br>
+<div class='row'>
+  <div class=''>
+    <h1>$7.99</h1>
+     <%= link_to "Sign up and get 1 free credit!", new_user_registration_path, class: 'btn btn-primary' %>
+  </div>   
+</div>   
+<div class="sign-up">
+<%= form_for(@job_link) do |f| %>
+  <div class="col-md-6">
+    <h3>Application Info</h3>
+    <%= f.label  "First Name" %><br />
+    <%= f.text_field :user_first_name %><br />
+
+    <%= f.label "Last Name" %><br />
+    <%= f.text_field :user_last_name %><br />
+
+    <div class="field">
+      <%= f.label  "email" %><br />
+      <%= f.email_field :user_email, autofocus: true %>
+    </div>
+    
+    <%= f.label  "Phone Number" %><br />
+    <%= f.text_field :user_phone_number %><br />
+
+    <label>Upload resumé</label><br/>
+    <%= f.file_field :user_resume %><br/><br/>
+  </div >  
+  <div class='col-md-6'>  
+    <label> Add a generic cover letter </label><br />
+    <%= f.text_area :user_cover_letter, class: "cover-letter" %><br /><br />
+    <%= f.hidden_field 'done_editing', value: 'true' %>
+    <%= f.submit "Apply!", class: 'btn'  %>
+  </div>
+<% end %>

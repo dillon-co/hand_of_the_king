@@ -31,4 +31,12 @@ class PagesController < ApplicationController
   def import_success
     @user = current_user
   end  
+
+  def single_application
+    @job_link_id = params["j_id"]
+    ## form, update job_link with info 
+    ## update job_link with users info if they want to apply just once
+    ## or redirect to user sign_up page, send params
+
+  end  
 end

@@ -33,6 +33,8 @@ Rails.application.routes.draw do
 
   get 'import_success' => 'pages#import_success', as: :import_success
 
+  get 'job_links/edit_user_info/:id' => 'job_links#edit_user_info', as: :edit_user_info
+
   resources :charges
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

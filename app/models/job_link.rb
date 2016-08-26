@@ -26,6 +26,16 @@ class JobLink < ActiveRecord::Base
   validates_presence_of :job_title
   accepts_nested_attributes_for :job_applications
 
+  has_attached_file :user_resume 
+  validates_attachment :user_resume,
+                       :content_type => {:content_type => %w(
+                        image/jpeg
+                        image/jpg 
+                        image/png
+                        application/pdf 
+                        application/msword 
+                        application/vnd.openxmlformats-officedocument.wordprocessingml.document)}
+
   ## Solution: save each paginated page in an array and run an each loop on that
 
   def run_search
@@ -97,8 +107,19 @@ class JobLink < ActiveRecord::Base
 
 
   def resume_key
-    
-    user != nil ? user.resume.url.split('http://s3.amazonaws.com/job-bot-bucket/').last.split('?').first : "none"
+    user != nil ? user.resume.url.split('http://s3.amazonaws.com/job-bot-bucket/').last.split('?').first : user_resume.url.split('http://s3.amazonaws.com/job-bot-bucket/').last.split('?').first
+  end  
+
+  def update_job_applications_with_user_info
+    job_applications.each do|j| 
+      j.update(user_name: "#{user_first_name} #{user_last_name}",
+        user_email: user_email,
+        user_phone_number: user_phone_number,
+        user_resume_path: resume_key,
+        user_cover_letter: user_cover_letter 
+                                        )
+      j.apply_to_job if j.should_apply == true      
+    end  
   end  
 
   def call_search_worker
@@ -106,7 +127,13 @@ class JobLink < ActiveRecord::Base
   end  
 
   def call_application_worker
-    ApplicationWorker.perform_async(id)
+    if user_id != nil
+      ApplicationWorker.perform_async(id)
+    elsif user_first_name != nil
+      UserLessApplicationWorker.perform_async(id)
+    else
+      puts "Still Editing."    
+    end  
   end  
 end
 

@@ -27,7 +27,7 @@
                <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
              <% end %>  
           <% else %>
-            <%= link_to "Apply To Selected", new_user_session_path(j_f: @job_applications.count), class: 'btn btn-lg btn-primary' %>
+               <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
           <% end %> 
         </div>
         <br>
@@ -52,7 +52,7 @@
              <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
           <% end %>
          <% else %>
-            <%= link_to "Apply To Selected", new_user_session_path, class: 'btn btn-lg btn-primary' %>
+               <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
         <% end %>   
     <% end %>   
   <% end %>
