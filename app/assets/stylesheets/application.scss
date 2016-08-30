@@ -189,13 +189,32 @@ h1{
   
 }
 
-.progress-success{
+.progress[value]{
   background-color: #47CE9A;
   height: 5px;
   background-image: none;
   -webkit-box-shadow: white;
   box-shadow: white;
 }
+
+.progress[value] {
+  background-color: #47CE9A;
+}
+
+
+.progress[value]::-webkit-progress-bar {
+  background-color: white;
+  background-image: none;
+  border-radius:0;
+}
+
+
+.progress[value]::-webkit-progress-value {
+  background-color: #47CE9A;
+  color:white;
+  border-radius:0;
+}
+
 
 .turbolinks-progress-bar {
   // margin-top:70px;
