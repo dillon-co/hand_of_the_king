@@ -61,13 +61,18 @@ class JobLink < ActiveRecord::Base
       begin 
         search_page = agent.page
           agent.page.search(".result:contains('Easily apply')").each do |title|
-            job_title_company_location_array = [title.css('h2').text, title.at(".company").text, title.search('.location').text]
+            # byebug
+            t  = title.css('a').text
+            title.at(".company") != nil ? c = title.at(".company").text  : c = 'Unknown Company'
+            title.at(".location") != nil ? l = title.at(".location").text  : l = 'Unknown location'
+            job_title_company_location_array = [t, c, l]
             next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
             indeed_job_address = "http://www.indeed.com#{title.at('a').attributes['href'].value}"
             create_job_application(agent, title, job_title_company_location_array, path_to_resume, indeed_job_address)
           end 
       rescue Exception => e
          puts "\n\n#{e}\n\n"
+         # byebug
          next 
       end  
       break if !(search_page.at_css(".np:contains('Next »')"))
