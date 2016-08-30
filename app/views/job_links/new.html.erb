@@ -1,3 +1,4 @@
+<!-- <progress id='pb' class="progress" value=0  max="1000"></progress> -->
 <div class-"container-fluid jumbotron super-jumbo">
   <div class='main-title col-sm-offset-2'>
     <span><h1>Velvi</h1></span><span><h5 class="beta"></h5></span>
@@ -16,8 +17,8 @@
           <h5>Where</h5>
           <%= f.text_field :job_location %><br /><br /> 
         </span>
-      <div class='col-lg-2 button-element' align='center' >
-          <%= f.submit "Explore", class: 'btn btn-primary' %>
+        <div class='col-lg-2 button-element' align='center', onclick="generateProgressBar()" >
+          <%= f.submit "Explore", class: 'btn btn-primary', id: 'job-search-button' %>
         </div>   
       </div>  
     <% end %>  

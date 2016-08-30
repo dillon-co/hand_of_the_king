@@ -62,7 +62,7 @@ class JobLink < ActiveRecord::Base
         search_page = agent.page
           agent.page.search(".result:contains('Easily apply')").each do |title|
             # byebug
-            t  = title.css('a').text
+            title.at("h2") != nil ? t = title.at("h2").text  : t = ''
             title.at(".company") != nil ? c = title.at(".company").text  : c = 'Unknown Company'
             title.at(".location") != nil ? l = title.at(".location").text  : l = 'Unknown location'
             job_title_company_location_array = [t, c, l]

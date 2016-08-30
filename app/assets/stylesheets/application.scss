@@ -29,6 +29,9 @@ h1{
   font-family: 'Montserrat', sans-serif;
 }
 
+// body { padding-top: 70px; }
+
+
 .product-div{
   // padding: 5px;
   margin-top: 0.7em;
@@ -184,5 +187,19 @@ h1{
 .old-price{
   text-decoration: line-through;
   
+}
+
+.progress-success{
+  background-color: #47CE9A;
+  height: 5px;
+  background-image: none;
+  -webkit-box-shadow: white;
+  box-shadow: white;
+}
+
+.turbolinks-progress-bar {
+  // margin-top:70px;
+  height: 5px;
+  background-color: #47CE9A;
 }
 
