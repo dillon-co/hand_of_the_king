@@ -23,7 +23,7 @@ class JobLink < ActiveRecord::Base
   has_many :job_applications
   after_create  :run_search#:call_search_worker
   after_update :call_application_worker
-  validates_presence_of :job_title
+  # validates_presence_of :job_title
   accepts_nested_attributes_for :job_applications
 
   has_attached_file :user_resume 
