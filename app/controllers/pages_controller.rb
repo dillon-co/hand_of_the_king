@@ -39,4 +39,11 @@ class PagesController < ApplicationController
     ## or redirect to user sign_up page, send params
 
   end  
+
+  def loading
+    job_link = JobLink.find(params['n_jid'])    
+    # respond_to do |format|
+    #    format.json { render json: {success: job_link.done_searching? }}
+    #  end
+  end  
 end

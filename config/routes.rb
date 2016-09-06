@@ -31,9 +31,14 @@ Rails.application.routes.draw do
 
   get 'mission' => 'pages#mission', as: :mission
 
+  get 'loading' => 'pages#loading', as: :loading
+
   get 'import_success' => 'pages#import_success', as: :import_success
 
   get 'job_links/edit_user_info/:id' => 'job_links#edit_user_info', as: :edit_user_info
+
+  get 'is_still_loading' => 'job_links#is_still_loading', as: :still_loading_json
+
 
   resources :charges
   # The priority is based upon order of creation: first created -> highest priority.

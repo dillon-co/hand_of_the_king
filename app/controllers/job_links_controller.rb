@@ -21,6 +21,7 @@ class JobLinksController < ApplicationController
       job_link = JobLink.new(job_link_params)
     end  
     if job_link.save
+      # redirect_to loading_path(n_jid: job_link.id)
       redirect_to edit_job_link_path(job_link)
     else
       render :new
@@ -68,6 +69,12 @@ class JobLinksController < ApplicationController
     @job_link = JobLink.find(params[:id])
   end  
   
+  def is_still_loading
+    @job_link = JobLink.find(params['n_jid'])    
+    respond_to do |format|
+       format.json { render json: {success: @job_link.done_searching? }}
+    end 
+  end  
   private
 
   def job_link_params

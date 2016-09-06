@@ -21,7 +21,7 @@ class JobLink < ActiveRecord::Base
 
   belongs_to :user
   has_many :job_applications
-  after_create  :run_search#:call_search_worker
+  after_create  :run_search #:call_search_worker
   after_update :call_application_worker
   # validates_presence_of :job_title
   accepts_nested_attributes_for :job_applications
@@ -57,6 +57,7 @@ class JobLink < ActiveRecord::Base
     path_to_resume = resume_key
     @counter = 0
     search_page = agent.page
+    available_jobs = Array.new
     until @counter == 12
       begin 
         search_page = agent.page
@@ -68,7 +69,8 @@ class JobLink < ActiveRecord::Base
             job_title_company_location_array = [t, c, l]
             next if job_applications.where(title: job_title_company_location_array[0], company: job_title_company_location_array[1]).any? || !(agent.page.uri.to_s.match(/indeed.com/))
             indeed_job_address = "http://www.indeed.com#{title.at('a').attributes['href'].value}"
-            create_job_application(agent, title, job_title_company_location_array, path_to_resume, indeed_job_address)
+            
+            available_jobs << add_available_jobs_to_array(agent, title, job_title_company_location_array, path_to_resume, indeed_job_address)
           end 
       rescue Exception => e
          puts "\n\n#{e}\n\n"
@@ -80,29 +82,38 @@ class JobLink < ActiveRecord::Base
       next_page = "#{indeed_base}&start=#{@counter+=1}0"
       agent.get next_page
       puts "===\n\n#{agent.page.uri}"
-    end  
+    end
+    create_job_applications(available_jobs) 
+    done_searching = true  
   end  
 
-  def create_job_application(agent, title, job_attributes, path_to_resume, indeed_job_url)
-    puts "\n\n#{'===='*40}\n\n\n -----CREATING FILE FROM----- \n#{agent.page.uri}\n\n\n\n\n"
+  def create_job_applications(available_jobs_array)
+    puts "\n\n#{'===='*40}\n\n\n -----CREATING JOB APPLICATIONS WITH ARRAY----- \n\n\n\n\n\n"
+    job_applications.create(available_jobs_array)
+  end  
+
+  def add_available_jobs_to_array(agent, title, job_attributes, path_to_resume, indeed_job_url)
+    puts "\n\n#{'===='*40}\n -----CREATING HASH FROM----- \n#{agent.page.uri}\n\n"
     if user != nil
-        job_applications.find_or_create_by(indeed_link: indeed_job_url,
-                                           title: job_attributes[0],
-                                           company: job_attributes[1], 
-                                           location: job_attributes[2], 
-                                           user_name: user_attribute_array[0],
-                                           user_email: user_attribute_array[1],
-                                           user_phone_number: user_attribute_array[2],
-                                           user_resume_path: path_to_resume,
-                                           user_cover_letter: user_attribute_array[3]
-                                           )
+        return  {
+                 indeed_link: indeed_job_url,
+                 title: job_attributes[0],
+                 company: job_attributes[1], 
+                 location: job_attributes[2], 
+                 user_name: user_attribute_array[0],
+                 user_email: user_attribute_array[1],
+                 user_phone_number: user_attribute_array[2],
+                 user_resume_path: path_to_resume,
+                 user_cover_letter: user_attribute_array[3]
+                 }
     else
-      job_applications.find_or_create_by(indeed_link: indeed_job_url,
-                                         title: job_attributes[0],
-                                         company: job_attributes[1], 
-                                         location: job_attributes[2],     
-                                         )
-    end    
+        return {
+                indeed_link: indeed_job_url,
+                title: job_attributes[0],
+                company: job_attributes[1], 
+                location: job_attributes[2],     
+              }
+    end
   end  
 
 
