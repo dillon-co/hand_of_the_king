@@ -25,6 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #   gem 'unicorn'
 gem 'puma'
 
+gem 'parallel'
+
 gem 'stripe'
 
 gem 'sidekiq'

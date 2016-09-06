@@ -151,6 +151,7 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    parallel (1.9.0)
     pg (0.18.4)
     poltergeist (1.9.0)
       capybara (~> 2.1)
@@ -317,6 +318,7 @@ DEPENDENCIES
   mechanize (~> 2.7, >= 2.7.4)
   omnicontacts
   paperclip (~> 5.0.0.beta1)
+  parallel
   pg (~> 0.15)
   poltergeist
   pry-byebug
