@@ -27,6 +27,7 @@ require 'job_application_worker'
 require 'mechanize'
 require 'open-uri'
 
+
 class JobLink < ActiveRecord::Base
 
   belongs_to :user
