@@ -21,6 +21,7 @@ class JobLinksController < ApplicationController
       job_link = JobLink.new(job_link_params)
     end  
     if job_link.save
+      # redirect_to loading_path(n_jid: job_link.id)
       redirect_to edit_job_link_path(job_link)
     else
       render :new
@@ -34,9 +35,9 @@ class JobLinksController < ApplicationController
 
   def update
     @job_link = JobLink.find(params[:id])
-    if user_signed_in?
-      current_user.update(credits: current_user.credits-1)
-    end  
+    # if user_signed_in?
+    #   current_user.update(credits: current_user.credits-1)
+    # end  
     # @job_link.update(job_link_params) 
 
     if request.original_url.split('/')[-2] != 'edit_user_info' && params['job_link']['done_editing'] != 'true'
@@ -68,6 +69,12 @@ class JobLinksController < ApplicationController
     @job_link = JobLink.find(params[:id])
   end  
   
+  def is_still_loading
+    @job_link = JobLink.find(params['n_jid'])    
+    respond_to do |format|
+       format.json { render json: {success: @job_link.done_searching? }}
+    end 
+  end  
   private
 
   def job_link_params

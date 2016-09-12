@@ -7,9 +7,7 @@
 
   <div class='col-lg-2'>
     <br>
-    <% if user_signed_in? %>
-      <h4><%= @job_link.user.credits %> Credits!</h4>
-    <% end %>  
+     
   </div>  
 </div>
 
@@ -19,16 +17,7 @@
 <% if @job_applications.count > 0 %>
     <%= form_for @job_link do |f| %>
         <div class=''>
-          <% if user_signed_in? %>
-             <% if @job_link.user.credits < 1 %>
-              <h4>Apply To All With 1 Credit</h4> 
-              <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
-             <% else %> 
-               <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
-             <% end %>  
-          <% else %>
-               <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
-          <% end %> 
+           <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %> 
         </div>
         <br>
         <br> 
@@ -45,16 +34,7 @@
             </div>
            <% end %>
          <% end %>
-        <% if user_signed_in? %>
-          <% if @job_link.user.credits < 1 %>
-            <h4>Apply To All With 1 Credit</h4> 
-            <%= link_to "Get Credits", price_page_path, class:'btn btn-lg btn-primary' %> 
-          <% else %> 
-             <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
-          <% end %>
-         <% else %>
-               <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
-        <% end %>   
+           <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>  
     <% end %>   
   <% end %>
 </div>
