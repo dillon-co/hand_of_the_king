@@ -11,11 +11,14 @@
         <% if user_signed_in? %>
          <li class='nav-item active pull-lg-right'>
           <%= link_to "Share", share_path, class: 'navbar-brand' %>
-        </li>
+          </li>
           <li class='nav-item active pull-lg-right'>    
               <%= link_to 'Profile', profile_path, class: 'nav-link' %>
           </li>  
         <% else %>
+            <li class='nav-item btn-primary pull-lg-right'>
+              <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link btn active' %>
+            </li>  
              <li class='nav-item active pull-lg-right'>
               <%= link_to 'Login', new_user_session_path, class: 'nav-link btn btn-outline'  %>  
             </li>      
