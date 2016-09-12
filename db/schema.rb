@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826050057) do
+ActiveRecord::Schema.define(version: 20160831023411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20160826050057) do
     t.string   "user_resume_content_type"
     t.integer  "user_resume_file_size"
     t.datetime "user_resume_updated_at"
+    t.boolean  "done_searching"
   end
 
   add_index "job_links", ["user_id"], name: "index_job_links_on_user_id", using: :btree
