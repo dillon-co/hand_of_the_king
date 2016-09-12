@@ -20,30 +20,23 @@
 //   return this.progressBarTimeout = setTimeout(this.showProgressBar, 0);
 // };
 
-// function generateProgressBar(){
-//     setInterval(function(){
-//       // console.log($('#pb').value)
-//       // document.getElementById('pb').style.backgroundImage = 'none'
-//       // document.getElementById('pb').style.backgroundColor = '#47CE9A'
-//       //   'background-image': 'none',
-//       //   'background-color': '#47CE9A'
-//       // })
-//       var oldValue = document.getElementById('pb').value
-//       // console.log(oldValue)
-//       // console.log()
-//       document.getElementById('pb').value = oldValue + 1
-//     }, 20)
-//   }  
+function generateProgressBar(){
+    setInterval(function(){
+      console.log($('#pb').value)
+      var oldValue = document.getElementById('pb').value
+      document.getElementById('pb').value = oldValue + 1
+    }, 5)
+  }  
 
-console.log(window.location.search.substring(1).split('=')[0] == 'n_jid');
-var params = window.location.search.substring(1).split('=')
-if(params[0] == 'n_jid')
-  setInterval(function() {
-      console.log("meow")
-      $.get('is_still_loading', {n_jid: parseInt(params[1])}, function(data) {
-         if (data.success) {
-           // Done loading, redirect or whatever
-           console.log(data)
-         }
-    })
-  }, 1000)
+// console.log(window.location.search.substring(1).split('=')[0] == 'n_jid');
+// var params = window.location.search.substring(1).split('=')
+// if(params[0] == 'n_jid')
+//   setInterval(function() {
+//       console.log("meow")
+//       $.get('is_still_loading', {n_jid: parseInt(params[1])}, function(data) {
+//          if (data.success) {
+//            // Done loading, redirect or whatever
+//            console.log(data)
+//          }
+//     })
+//   }, 1000)

@@ -35,9 +35,9 @@ class JobLinksController < ApplicationController
 
   def update
     @job_link = JobLink.find(params[:id])
-    # if user_signed_in?
-    #   current_user.update(credits: current_user.credits-1)
-    # end  
+    if user_signed_in?
+      current_user.update(credits: current_user.credits-1)
+    end  
     # @job_link.update(job_link_params) 
 
     if request.original_url.split('/')[-2] != 'edit_user_info' && params['job_link']['done_editing'] != 'true'
