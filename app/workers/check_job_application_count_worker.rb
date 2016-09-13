@@ -10,6 +10,6 @@ class JobApplicationCountWorker
     users.each do |us|
       new_users[us]
     end
-    puts new_users.values.inject(:+) 
+    puts new_users
   end
 end    
