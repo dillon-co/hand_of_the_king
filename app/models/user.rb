@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
 
   def create_user_code
     code = SecureRandom.urlsafe_base64(4)
-    if !(User.where(referral_code: code).any?)
+    unless User.where(referral_code: code).any?
       self.update(referral_code: code) 
     else
       create_user_code
