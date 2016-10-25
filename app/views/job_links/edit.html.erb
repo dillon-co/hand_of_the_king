@@ -23,20 +23,28 @@
          <% @job_applications.each  do |job| %>
            <%= f.fields_for "job[]", job do |job_field| %>
             <div>
-             <span class='col-lg-11'>
+             <span class='col-lg-10'>
                <h4 class='title'><%= job.title != '' ? job.title : job.job_link.job_title.titleize %></h4>
                <h6><%= job.company %>; <%= job.location %></h6>
                <p><%= link_to "Description on Indeed.com", job.indeed_link, class: 'subtitle' %></p>
             <hr>
              </span>
-              <span class='col-lg-1'><%= job_field.check_box :should_apply, {checked: true} %></span>
+              <div class='col-lg-2'>
+                <h6>Auto Apply</h6>
+                <%= job_field.check_box :should_apply, {checked: true}, data: {toggle: 'toggle'} %>
+              </div>
             </div>
            <% end %>
          <% end %>
-         <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+         <br>
+         <div cass='row'>
+           <%= f.submit "Apply To Selected", class: 'btn btn-lg btn-primary' %>
+         </div>
     <% end %>   
   <% end %>
 </div>
 <br>
 <br>
 <br>
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
