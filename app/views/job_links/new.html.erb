@@ -4,7 +4,7 @@
     <span><h1>Velvi</h1></span><span><h5 class="beta"></h5></span>
     <div class="theta">
       <span><h4>The best job application software in the world. </h4></span><!-- <span><h5 class="theta">Like a wizard.</h5></span> -->
-    </div>  
+    </div>
   </div>
   <div class='container-fluid main-jumbo'>
     <%= form_for @job_link do |f| %>
@@ -15,12 +15,12 @@
         </span>
         <span class='col-lg-5'>
           <h5>Where</h5>
-          <%= f.text_field :job_location %><br /><br /> 
+          <%= f.text_field :job_location %><br /><br />
         </span>
         <div class='col-lg-2 button-element' align='center', onclick="generateProgressBar()" >
           <%= f.submit "Explore", class: 'btn btn-primary main-search-button', id: 'job-search-button' %>
-        </div>   
-      </div>  
-    <% end %>  
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

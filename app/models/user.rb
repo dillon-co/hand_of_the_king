@@ -36,24 +36,25 @@ require 'securerandom'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  TEMP_EMAIL_PREFIX = 'change@me'
+  TEMP_EMAIL_REGEX = /\Achange@me/
+
+
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:linkedin]
 
-
-
-
-  has_attached_file :resume 
+  has_attached_file :resume
   validates_attachment :resume,
                        :content_type => {:content_type => %w(
                         image/jpeg
-                        image/jpg 
+                        image/jpg
                         image/png
-                        application/pdf 
-                        application/msword 
+                        application/pdf
+                        application/msword
                         application/vnd.openxmlformats-officedocument.wordprocessingml.document)}
-  
+
   validates_attachment_presence :resume
-  validates :first_name, presence: true, on: :create       
+  validates :first_name, presence: true, on: :create
   validates :last_name, presence: true, on: :create
 
   # belongs_to :recruiters
@@ -66,41 +67,16 @@ class User < ActiveRecord::Base
   def create_user_code
     code = SecureRandom.urlsafe_base64(4)
     unless User.where(referral_code: code).any?
-      self.update(referral_code: code) 
+      self.update(referral_code: code)
     else
       create_user_code
-    end    
-  end  
+    end
+  end
 
   def update_parent_user
     parent = User.find_by(referral_code: parent_code)
     past_money_earned = parent.money_earned
     !!past_money_earned ? parent.update(money_earned: past_money_earned+3) : parent.update(money_earned: 3)
-  end  
+  end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
